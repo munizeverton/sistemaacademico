@@ -17,6 +17,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/dashboard.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 
     @yield('specific-styles')
 </head>

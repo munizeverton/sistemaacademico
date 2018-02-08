@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AlunoRequest;
+use App\Models\Aluno;
 use App\Service\AlunoService;
 
 class AlunoController extends Controller
@@ -26,7 +27,7 @@ class AlunoController extends Controller
      */
     public function index()
     {
-        $alunos = $this->alunoService->list();
+        $alunos = $this->alunoService->list(false);
 
         return view('aluno.index', [
             'alunos' => $alunos,
@@ -38,7 +39,7 @@ class AlunoController extends Controller
      */
     public function create()
     {
-
+        return view('aluno.create', ['aluno' => new Aluno()]);
     }
 
     /**
