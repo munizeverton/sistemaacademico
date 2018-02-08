@@ -4,13 +4,16 @@ language: php
 services:
   - postgresql
 
+directories:
+  - $HOME/.composer/cache/files
+
 php:
   - 7.1
   - 7.2
 
 before_script:
   - psql -c 'create database sistemaacademico_test;' -U postgres
-  - composer install
+  - composer install --prefer-dist
   - php artisan --env=travis migrate
 
 env:
