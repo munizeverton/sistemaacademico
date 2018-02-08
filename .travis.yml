@@ -6,10 +6,8 @@ services:
 
 # list any PHP version you want to test against
 php:
-  # aliased to a recent 7.x version
   - 7.1
-  # aliased to a recent hhvm version
-  - hhvm
+  - 7.2
 
 before_script:
   - psql -c 'create database sistemaacademico_test;' -U postgres

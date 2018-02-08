@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/munizeverton/sistemaacademico.svg?branch=master)](https://travis-ci.org/munizeverton/sistemaacademico)
+# Sistema Acadêmico
+
 ## Decisões tomadas no desenvolvimento
 
 #### Uso do Laravel
