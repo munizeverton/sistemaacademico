@@ -24,13 +24,13 @@ class AlunoService
     {
         $aluno = new Aluno();
 
-        $aluno->cpf = $data['cpf'];
-        $aluno->nome = $data['nome'];
-        $aluno->rg = $data['rg'];
-        $aluno->data_nascimento = $data['data_nascimento'];
-        $aluno->telefone = $data['telefone'];
-
         try {
+            $aluno->cpf = $data['cpf'];
+            $aluno->nome = $data['nome'];
+            $aluno->rg = $data['rg'];
+            $aluno->data_nascimento = $data['data_nascimento'];
+            $aluno->telefone = $data['telefone'];
+
             $aluno->save();
         } catch (\Exception $e) {
             throw new \Exception('Ocorreu um erro ao gravar o aluno');
@@ -46,7 +46,7 @@ class AlunoService
      * @return Aluno
      * @throws \Exception
      */
-    public function show(int $id): Aluno
+    public function show(int $id)
     {
         try {
             return Aluno::find($id);
@@ -72,7 +72,7 @@ class AlunoService
             }
             return $aluno->get();
         } catch (\Exception $e) {
-            throw new \Exception('Ocorreu um erro ao listar os aluno');
+            throw new \Exception('Ocorreu um erro ao listar os alunos');
         }
     }
 
@@ -84,7 +84,7 @@ class AlunoService
      * @return Aluno
      * @throws \Exception
      */
-    public function update(int $id, $data): Aluno
+    public function update(int $id, $data)
     {
         $aluno = Aluno::find($id);
 
@@ -92,13 +92,13 @@ class AlunoService
             throw new \Exception('Aluno não encotrado');
         }
 
-        $aluno->cpf = $data['cpf'];
-        $aluno->nome = $data['nome'];
-        $aluno->rg = $data['rg'];
-        $aluno->data_nascimento = $data['data_nascimento'];
-        $aluno->telefone = $data['telefone'];
-
         try {
+            $aluno->cpf = $data['cpf'];
+            $aluno->nome = $data['nome'];
+            $aluno->rg = $data['rg'];
+            $aluno->data_nascimento = $data['data_nascimento'];
+            $aluno->telefone = $data['telefone'];
+
             $aluno->save();
         } catch (\Exception $e) {
             throw new \Exception('Ocorreu um erro ao atualizar o aluno');
@@ -114,12 +114,12 @@ class AlunoService
      * @return bool
      * @throws \Exception
      */
-    public function delete(int $id): bool
+    public function delete(int $id)
     {
         try {
             return Aluno::find($id)->delete();
         } catch (\Exception $e) {
-            throw new \Exception('Ocorreu um erro ao deletar os aluno');
+            throw new \Exception('Ocorreu um erro ao deletar os alunos');
         }
     }
 }

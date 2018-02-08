@@ -35,8 +35,12 @@ class AlunoServiceTest extends AlunoBaseTest
         ];
 
         $service->store($data);
-
         $this->assertCount(1, Aluno::all()->all());
+
+        unset($data['cpf']);
+
+        $this->expectExceptionMessage('Ocorreu um erro ao gravar o aluno');
+        $service->store($data);
     }
 
     public function testShowAluno()
@@ -91,6 +95,14 @@ class AlunoServiceTest extends AlunoBaseTest
         $this->assertEquals('1234234', $aluno->rg);
         $this->assertEquals('1990-01-01', $aluno->data_nascimento);
         $this->assertEquals('21 2362-2756', $aluno->telefone);
+
+        $this->expectExceptionMessage('Aluno não encotrado');
+        $service->update(2, $data);
+
+        unset($data['cpf']);
+
+        $this->expectExceptionMessage('Ocorreu um erro ao atualizar o aluno');
+        $service->update(1, $data);
     }
 
     public function testDeleteAluno()
