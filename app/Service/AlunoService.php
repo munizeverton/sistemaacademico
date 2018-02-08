@@ -58,13 +58,19 @@ class AlunoService
     /**
      * Retorna um array de alunos
      *
+     * @param bool $paginate
+     * @param int $pageSize
      * @return Collection
      * @throws \Exception
      */
-    public function list(): Collection
+    public function list($paginate = true, $pageSize = 10)
     {
         try {
-            return Aluno::all();
+            $aluno = Aluno::query();
+            if ($paginate) {
+                return $aluno->paginate($pageSize);
+            }
+            return $aluno->get();
         } catch (\Exception $e) {
             throw new \Exception('Ocorreu um erro ao listar os aluno');
         }

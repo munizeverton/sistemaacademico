@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AlunoRequest;
 use App\Service\AlunoService;
-use Illuminate\Http\Request;
 
 class AlunoController extends Controller
 {
@@ -20,6 +19,18 @@ class AlunoController extends Controller
     public function __construct(AlunoService $alunoService)
     {
         $this->alunoService = $alunoService;
+    }
+
+    /**
+     * Action que monta a lista de alunos
+     */
+    public function index()
+    {
+        $alunos = $this->alunoService->list();
+
+        return view('aluno.index', [
+            'alunos' => $alunos,
+        ]);
     }
 
     /**

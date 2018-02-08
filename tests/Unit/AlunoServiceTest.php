@@ -5,13 +5,14 @@ namespace Tests\Feature;
 use App\Models\Aluno;
 use App\Service\AlunoService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\AlunoBaseTest;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Faker\Factory as Faker;
 
-class AlunoServiceTest extends TestCase
+class AlunoServiceTest extends AlunoBaseTest
 {
     use DatabaseTransactions;
 
@@ -110,20 +111,5 @@ class AlunoServiceTest extends TestCase
         $this->getService()->delete(2);
 
         $this->assertCount(1, Aluno::all());
-    }
-
-    /**
-     * @return AlunoService
-     */
-    private function getService()
-    {
-        return new AlunoService();
-    }
-
-    private function createFakeDataAluno($quantity = 1)
-    {
-        factory(Aluno::class, $quantity)->create()->each(function ($model) {
-            $model->save(factory(Aluno::class)->make()->getAttributes());
-        });
     }
 }
