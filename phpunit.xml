@@ -20,6 +20,11 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./app</directory>
+            <exclude>
+                <directory>./app/Exceptions</directory>
+                <directory>./app/Http/Middlewares</directory>
+                <directory>./app/Providers</directory>
+            </exclude>
         </whitelist>
     </filter>
     <php>

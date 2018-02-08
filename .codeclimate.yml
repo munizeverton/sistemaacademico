@@ -16,17 +16,17 @@ ratings:
   - "**.module"
   - "**.php"
 exclude_paths:
-  - config/
-  - **/spec/
-  - **/test/
-  - **/tests/
-  - **/vendor/
-  - **/*_test.go
-  - **/*.d.ts
-  - bootstrap/
-  - database/
-  - resources/
-  - routes/
-  - storage/
-  - public/
-  - _ide_helper.php
+  - "config/"
+  - "**/spec/"
+  - "**/test/"
+  - "**/tests/"
+  - "**/vendor/"
+  - "**/*_test.go"
+  - "**/*.d.ts"
+  - "bootstrap/"
+  - "database/"
+  - "resources/"
+  - "routes/"
+  - "storage/"
+  - "public/"
+  - "_ide_helper.php"
