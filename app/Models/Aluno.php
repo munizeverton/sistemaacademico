@@ -38,4 +38,8 @@ class Aluno extends Model
     use SoftDeletes;
 
     protected $table = 'alunos';
+
+    protected $fillable = [
+        'id', 'cpf', 'nome',
+    ];
 }
