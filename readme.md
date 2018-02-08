@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/munizeverton/sistemaacademico.svg?branch=master)](https://travis-ci.org/munizeverton/sistemaacademico)
+[![Code Climate](https://api.codeclimate.com/v1/badges/fce3d99739d018b37c33/maintainability)](https://codeclimate.com/github/munizeverton/sistemaacademico/maintainability)
+
 # Sistema Acadêmico
 
 ## Decisões tomadas no desenvolvimento
