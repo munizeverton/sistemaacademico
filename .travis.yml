@@ -13,6 +13,9 @@ before_script:
   - composer install
   - php artisan --env=travis migrate
 
+env:
+  - APP_ENV=travis
+
 script: phpunit
 
 notifications:
