@@ -1,0 +1,32 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+  fixme:
+    enabled: true
+  phpmd:
+    enabled: true
+  phpcodesniffer:
+    enabled: true
+ratings:
+  paths:
+  - "**.module"
+  - "**.php"
+exclude_paths:
+  - config/
+  - **/spec/
+  - **/test/
+  - **/tests/
+  - **/vendor/
+  - **/*_test.go
+  - **/*.d.ts
+  - bootstrap/
+  - database/
+  - resources/
+  - routes/
+  - storage/
+  - public/
+  - _ide_helper.php
