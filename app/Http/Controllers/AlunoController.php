@@ -45,9 +45,17 @@ class AlunoController extends Controller
     /**
      * Action que recebe o POST do formulário e cria o aluno
      * @param AlunoRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(AlunoRequest $request)
     {
+        try {
+            $this->alunoService->store($request->all());
+        } catch (\Exception $e) {
+            \Session::flash('alert-type', 'danger');
+            return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
+        }
 
+        return redirect(route('alunos.index'))->with('flash-message', 'Aluno cadastrado com sucesso');
     }
 }

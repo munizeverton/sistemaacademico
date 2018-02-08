@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +26,8 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -56,6 +56,25 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-notify.min.js"></script>
+
+<script>
+    @if(Session::has('flash-message'))
+        var type = 'success';
+        @if(Session::has('alert-type'))
+            type = '{{Session::get('alert-type')}}';
+        @endif
+        $.notify({
+            message: '{{Session::get('flash-message')}}'
+        }, {
+            type: type,
+            placement: {
+                align: 'center',
+                from: "top"
+            }
+        });
+    @endif
+</script>
 
 @yield('specific-scripts')
 

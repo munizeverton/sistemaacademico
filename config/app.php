@@ -148,6 +148,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         \Collective\Html\HtmlServiceProvider::class,
+        ValidadorCpf\CpfServiceProvider::class,
 
         /*
          * Package Service Providers...
