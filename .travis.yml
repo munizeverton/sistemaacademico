@@ -24,3 +24,7 @@ script: phpunit
 notifications:
   email:
     - munizeverton@gmail.com
+
+addons:
+  code_climate:
+    repo_token: d940a9fc258f0d8358d907593f910137e96f19d65553632beacd35ecbda59f1a
