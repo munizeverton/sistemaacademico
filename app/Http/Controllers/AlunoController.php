@@ -35,7 +35,7 @@ class AlunoController extends Controller
     }
 
     /**
-     * Action que monta o formulário de criação de aluno
+     * Monta o formulário de criação de aluno
      */
     public function create()
     {
@@ -43,7 +43,7 @@ class AlunoController extends Controller
     }
 
     /**
-     * Action que recebe o POST do formulário e cria o aluno
+     * Recebe o POST do formulário e cria o aluno
      * @param AlunoRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -57,5 +57,64 @@ class AlunoController extends Controller
         }
 
         return redirect(route('alunos.index'))->with('flash-message', 'Aluno cadastrado com sucesso');
+    }
+
+    /**
+     * Monta o formulário de update de aluno
+     * @param integer $alunoId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit($alunoId)
+    {
+        try {
+            $aluno = $this->alunoService->show($alunoId);
+        } catch (\Exception $e) {
+            \Session::flash('alert-type', 'danger');
+            return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
+        }
+
+        return view('aluno.edit', ['aluno' => $aluno]);
+    }
+
+    /**
+     * Recebe o PUT e atualiza o aluno
+     * @param AlunoRequest $request
+     * @param $alunoId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(AlunoRequest $request, $alunoId)
+    {
+        try {
+            $this->alunoService->update($alunoId, $request->all());
+        } catch (\Exception $e) {
+            \Session::flash('alert-type', 'danger');
+            return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
+        }
+
+        return redirect(route('alunos.index'))->with('flash-message', 'Aluno alterado com sucesso');
+    }
+
+    public function show($alunoId)
+    {
+        try {
+            $aluno = $this->alunoService->show($alunoId);
+        } catch (\Exception $e) {
+            \Session::flash('alert-type', 'danger');
+            return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
+        }
+
+        return view('aluno.show', ['aluno' => $aluno]);
+    }
+
+    public function destroy($alunoId)
+    {
+        try {
+            $this->alunoService->delete($alunoId);
+        } catch (\Exception $e) {
+            \Session::flash('alert-type', 'danger');
+            return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
+        }
+
+        return redirect(route('alunos.index'))->with('flash-message', 'Aluno excluído com sucesso');
     }
 }

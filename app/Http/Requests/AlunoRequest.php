@@ -28,7 +28,7 @@ class AlunoRequest extends FormRequest
         $this->sanitize();
 
         $aluno = $this->route('aluno');
-        $alunoId = $aluno instanceof Aluno ? $aluno->id : '';
+        $alunoId = !empty($aluno) ? $aluno : '';
 
         $rules = [
             'nome' => 'required|max:255',

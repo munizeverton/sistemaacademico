@@ -59,6 +59,9 @@ class AlunoServiceTest extends AlunoBaseTest
         $this->assertInstanceOf(Aluno::class, $aluno);
         $this->assertNotEmpty($aluno->nome);
         $this->assertNotEmpty($aluno->cpf);
+
+        $this->expectExceptionMessage('Aluno não encontrado');
+        $service->show(10);
     }
 
     public function testListAluno()
@@ -93,7 +96,7 @@ class AlunoServiceTest extends AlunoBaseTest
         $this->assertEquals('Fulano', $aluno->nome);
         $this->assertEquals('44121672836', $aluno->cpf);
         $this->assertEquals('1234234', $aluno->rg);
-        $this->assertEquals('1990-01-01', $aluno->data_nascimento);
+        $this->assertEquals('01/01/1990', $aluno->data_nascimento);
         $this->assertEquals('21 2362-2756', $aluno->telefone);
 
         $this->expectExceptionMessage('Aluno não encotrado');

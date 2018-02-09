@@ -49,10 +49,16 @@ class AlunoService
     public function show(int $id)
     {
         try {
-            return Aluno::find($id);
+            $aluno = Aluno::find($id);
         } catch (\Exception $e) {
             throw new \Exception('Ocorreu um erro ao buscar o aluno');
         }
+
+        if (empty($aluno)) {
+            throw new \Exception('Aluno não encontrado');
+        }
+
+        return $aluno;
     }
 
     /**
@@ -67,6 +73,7 @@ class AlunoService
     {
         try {
             $aluno = Aluno::query();
+
             if ($paginate) {
                 return $aluno->paginate($pageSize);
             }
@@ -116,8 +123,14 @@ class AlunoService
      */
     public function delete(int $id)
     {
+        $aluno = Aluno::find($id);
+
+        if (empty($aluno)) {
+            throw new \Exception('Aluno não encotrado');
+        }
+
         try {
-            return Aluno::find($id)->delete();
+            return $aluno->delete();
         } catch (\Exception $e) {
             throw new \Exception('Ocorreu um erro ao deletar os alunos');
         }

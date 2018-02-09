@@ -1,11 +1,11 @@
 
 @component('form.form_group',['field' => 'nome'])
-    {{ \Form::label('nome','Nome',['class' => 'control-label']) }}
+    {{ \Form::label('nome','Nome *',['class' => 'control-label']) }}
     {{ \Form::text('nome',null,['class' => 'form-control']) }}
 @endcomponent
 
 @component('form.form_group',['field' => 'cpf'])
-    {{ \Form::label('cpf', 'CPF',['class' => 'control-label']) }}
+    {{ \Form::label('cpf', 'CPF *',['class' => 'control-label']) }}
     {{ \Form::text('cpf', null,['class' => 'form-control'])}}
 @endcomponent
 
@@ -15,7 +15,7 @@
 @endcomponent
 
 @component('form.form_group',['field' => 'data_nascimento'])
-    {{ \Form::label('data_nascimento', 'Data de nascimento',['class' => 'control-label date']) }}
+    {{ \Form::label('data_nascimento', 'Data de nascimento *',['class' => 'control-label date']) }}
     {{ \Form::text('data_nascimento', null,['class' => 'form-control'])}}
 @endcomponent
 

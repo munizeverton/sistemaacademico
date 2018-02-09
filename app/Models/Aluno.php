@@ -40,6 +40,17 @@ class Aluno extends Model
     protected $table = 'alunos';
 
     protected $fillable = [
-        'id', 'cpf', 'nome',
+        'id',
+        'cpf',
+        'nome',
     ];
+
+    public function getDataNascimentoAttribute($value)
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        return (new \DateTime($value))->format('d/m/Y');
+    }
 }

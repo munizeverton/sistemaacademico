@@ -3,7 +3,6 @@
 @section('specific-styles')
     <link href="/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="/css/sweetalert.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -31,7 +30,7 @@
                             <td><a href="{{route('alunos.show',['aluno'=>$aluno->id])}}">{{$aluno->nome}}</a></td>
                             <td>{{$aluno->cpf}}</td>
                             <td>{{$aluno->rg}}</td>
-                            <td>{{(new \DateTime($aluno->data_nascimento))->format( 'd/m/Y')}}</td>
+                            <td>{{$aluno->data_nascimento}}</td>
                             <td>{{$aluno->telefone}}</td>
                             <td>
                                 <a href="{{route('alunos.show',['aluno'=>$aluno->id])}}">
@@ -41,11 +40,6 @@
                                 &nbsp;
                                 <a href="{{route('alunos.edit',['aluno'=>$aluno->id])}}">
                                     <span title="Editar" class="glyphicon glyphicon-pencil"
-                                          aria-hidden="true" data-toggle="tooltip"></span>
-                                </a>
-                                &nbsp;
-                                <a href="#" onclick="destroyAluno({{$aluno->id}})">
-                                    <span title="Excluir" class="glyphicon glyphicon-trash"
                                           aria-hidden="true" data-toggle="tooltip"></span>
                                 </a>
                             </td>
@@ -61,7 +55,6 @@
 @section('specific-scripts')
     <script src="/js/jquery.dataTables.min.js"></script>
     <script src="/js/dataTables.bootstrap.min.js"></script>
-    <script src="/js/sweetalert.min.js"></script>
     <script>
         $(function () {
             $('.datatable').DataTable({
@@ -72,18 +65,5 @@
             $('[data-toggle="tooltip"]').tooltip()
 
         })
-
-        function destroyAluno(alunoId) {
-            swal({
-                title: "Tem certeza?",
-                text: "Tem certeza que deseja exlcluir esse aluno",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Sim, excluir aluno",
-                cancelButtonText: "Cancelar",
-                closeOnConfirm: false
-            });
-        }
     </script>
 @endsection
