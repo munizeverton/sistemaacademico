@@ -4,7 +4,7 @@ $host = '';
 $username = '';
 $password = '';
 $database = '';
-
+dd(getenv("DATABASE_URL"));
 if (!empty(getenv("DATABASE_URL"))) {
     $url = parse_url(getenv("DATABASE_URL"));
 
