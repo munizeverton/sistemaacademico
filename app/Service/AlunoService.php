@@ -96,7 +96,7 @@ class AlunoService
         $aluno = Aluno::find($id);
 
         if (empty($aluno)) {
-            throw new \Exception('Aluno não encotrado');
+            throw new \Exception('Aluno não encontrado');
         }
 
         try {
@@ -126,7 +126,7 @@ class AlunoService
         $aluno = Aluno::find($id);
 
         if (empty($aluno)) {
-            throw new \Exception('Aluno não encotrado');
+            throw new \Exception('Aluno não encontrado');
         }
 
         try {

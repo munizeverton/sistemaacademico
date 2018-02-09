@@ -26,13 +26,7 @@ class AlunoServiceTest extends AlunoBaseTest
     {
         $service = $this->getService();
 
-        $data = [
-            'nome' => 'Fulano',
-            'cpf' => '44121672836',
-            'rg' => '1234234',
-            'data_nascimento' => '01/01/1990',
-            'telefone' => '21 2362-2756'
-        ];
+        $data = $this->getFakeAlunoData();
 
         $service->store($data);
         $this->assertCount(1, Aluno::all()->all());
@@ -82,13 +76,7 @@ class AlunoServiceTest extends AlunoBaseTest
         ]);
         $service = $this->getService();
 
-        $data = [
-            'nome' => 'Fulano',
-            'cpf' => '44121672836',
-            'rg' => '1234234',
-            'data_nascimento' => '01/01/1990',
-            'telefone' => '21 2362-2756'
-        ];
+        $data = $this->getFakeAlunoData();
 
         $service->update(1, $data);
         $aluno = Aluno::find(1);
@@ -99,7 +87,7 @@ class AlunoServiceTest extends AlunoBaseTest
         $this->assertEquals('01/01/1990', $aluno->data_nascimento);
         $this->assertEquals('21 2362-2756', $aluno->telefone);
 
-        $this->expectExceptionMessage('Aluno não encotrado');
+        $this->expectExceptionMessage('Aluno não encontrado');
         $service->update(2, $data);
 
         unset($data['cpf']);
@@ -126,5 +114,8 @@ class AlunoServiceTest extends AlunoBaseTest
         $this->getService()->delete(2);
 
         $this->assertCount(1, Aluno::all());
+
+        $this->expectExceptionMessage('Aluno não encontrado');
+        $this->getService()->delete(2);
     }
 }

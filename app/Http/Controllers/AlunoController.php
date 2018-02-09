@@ -46,15 +46,11 @@ class AlunoController extends Controller
      * Recebe o POST do formulário e cria o aluno
      * @param AlunoRequest $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function store(AlunoRequest $request)
     {
-        try {
-            $this->alunoService->store($request->all());
-        } catch (\Exception $e) {
-            \Session::flash('alert-type', 'danger');
-            return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
-        }
+        $this->alunoService->store($request->all());
 
         return redirect(route('alunos.index'))->with('flash-message', 'Aluno cadastrado com sucesso');
     }
@@ -63,15 +59,11 @@ class AlunoController extends Controller
      * Monta o formulário de update de aluno
      * @param integer $alunoId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function edit($alunoId)
     {
-        try {
-            $aluno = $this->alunoService->show($alunoId);
-        } catch (\Exception $e) {
-            \Session::flash('alert-type', 'danger');
-            return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
-        }
+        $aluno = $this->alunoService->show($alunoId);
 
         return view('aluno.edit', ['aluno' => $aluno]);
     }
@@ -81,15 +73,11 @@ class AlunoController extends Controller
      * @param AlunoRequest $request
      * @param $alunoId
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function update(AlunoRequest $request, $alunoId)
     {
-        try {
-            $this->alunoService->update($alunoId, $request->all());
-        } catch (\Exception $e) {
-            \Session::flash('alert-type', 'danger');
-            return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
-        }
+        $this->alunoService->update($alunoId, $request->all());
 
         return redirect(route('alunos.index'))->with('flash-message', 'Aluno alterado com sucesso');
     }

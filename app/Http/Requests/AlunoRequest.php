@@ -33,10 +33,11 @@ class AlunoRequest extends FormRequest
         $rules = [
             'nome' => 'required|max:255',
             'cpf' => [
+                'required',
                 'cpf',
                 Rule::unique('alunos')->ignore($alunoId, 'id')
             ],
-            'data_nascimento' => 'date'
+            'data_nascimento' => 'date_format:d/m/Y'
         ];
 
         return $rules;
@@ -48,7 +49,7 @@ class AlunoRequest extends FormRequest
             'nome.required' => 'O campo Nome é obrigatório',
             'cpf.required' => 'O campo CPF é obrigatório',
             'cpf.unique' => 'O CPF informado já está cadastrado',
-            'cpf.cpf' => 'O CPF deve ser um CPF válido',
+            'cpf.cpf' => 'O CPF deve ser valido',
             'data_nascimento.date' => 'O campo Data de nascimento precisa ser uma data válida',
         ];
 
@@ -59,8 +60,8 @@ class AlunoRequest extends FormRequest
     {
         $input = $this->all();
 
-        $input['rg'] = filter_var($input['rg'],FILTER_SANITIZE_STRING);
-        $input['nome'] = filter_var($input['nome'],FILTER_SANITIZE_STRING);
+        $input['rg'] = isset($input['rg']) ? filter_var($input['rg'],FILTER_SANITIZE_STRING) : null;
+        $input['nome'] = isset($input['nome']) ? filter_var($input['nome'],FILTER_SANITIZE_STRING) : null;
 
         $this->replace($input);
     }
