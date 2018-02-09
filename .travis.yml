@@ -20,7 +20,7 @@ before_script:
 env:
   - APP_ENV=travis
 
-script: phpunit
+script: phpunit --testsuite Unit
 
 notifications:
   email:
