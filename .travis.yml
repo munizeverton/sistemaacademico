@@ -15,7 +15,7 @@ before_script:
   - psql -c 'create database sistemaacademico_test;' -U postgres
   - composer install --prefer-dist
   - php artisan --env=travis migrate
-  - sudo chmod storage/ -R
+  - sudo chmod 777 storage/ -R
 
 env:
   - APP_ENV=travis
