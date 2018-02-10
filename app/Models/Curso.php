@@ -47,4 +47,29 @@ class Curso extends Model
         'duracao',
         'periodo_id',
     ];
+
+    public function periodo()
+    {
+        return $this->belongsTo(Periodo::class);
+    }
+
+    public function getValorMatriculaFormattedAttribute()
+    {
+        $value = $this->valor_matricula;
+        if ($value === null) {
+            return null;
+        }
+
+        return number_format($value, 2, ',', '.');
+    }
+
+    public function getValorMensalidadeFormattedAttribute()
+    {
+        $value = $this->valor_mensalidade;
+        if ($value === null) {
+            return null;
+        }
+
+        return number_format($value, 2, ',', '.');
+    }
 }

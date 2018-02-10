@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::resource('alunos', 'AlunoController');
+Route::resource('cursos', 'CursoController');

@@ -21,8 +21,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Periodo extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'periodos';
 
     protected $fillable = [
@@ -31,4 +29,9 @@ class Periodo extends Model
     ];
 
     public $timestamps = false;
+
+    public function __toString()
+    {
+        return $this->nome;
+    }
 }
