@@ -26,9 +26,9 @@ class Periodo extends Model
     protected $table = 'periodos';
 
     protected $fillable = [
+        'id',
         'nome',
     ];
 
     public $timestamps = false;
-
 }

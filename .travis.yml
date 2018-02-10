@@ -1,31 +1,29 @@
-
 language: php
-
 services:
-  - postgresql
-
+- postgresql
 directories:
-  - $HOME/.composer/cache/files
-
+- $HOME/.composer/cache/files
 php:
-  - 7.1
-  - 7.2
-
+- 7.1
+- 7.2
 before_script:
-  - psql -c 'create database sistemaacademico_test;' -U postgres
-  - composer install --prefer-dist
-  - php artisan --env=travis migrate
-  - sudo chmod 777 storage/ -R
-
+- psql -c 'create database sistemaacademico_test;' -U postgres
+- composer install --prefer-dist
+- php artisan --env=travis migrate
+- sudo chmod 777 storage/ -R
 env:
-  - APP_ENV=travis
-
+- APP_ENV=travis
 script: phpunit --testsuite Unit
-
 notifications:
   email:
-    - munizeverton@gmail.com
-
+  - munizeverton@gmail.com
 addons:
   code_climate:
     repo_token: d940a9fc258f0d8358d907593f910137e96f19d65553632beacd35ecbda59f1a
+deploy:
+  provider: heroku
+  api_key:
+    secure: I9maCcSB/AGn9vLrAnEWSWnxnCXX51tl50wllkAA22j3wR+dbAy7s2X/+SGYgE5YXS+SORVzHKfZSSi2lRDYIz3bv2JoMmsnUR/E1nkMuXR/gQOOAUsjiPAkbF67kpTYTy6m27rGI5a+W5oIU8L1WbPSkGjTnjmxQuEawhO6qbcj9Xt+z0F52ErwIa8tOvdTtWs9bavvBRi3uwMWHIuSJjQGuEcvLcsJ+lHHXFaxl/RK/4UBLzMMQAC4aD/QV+VSNsB2g3XPQMdPVLvtPy37s67K1PmfTWbxu8bNIdgUXxD8KG7XkXy8eXORukgMoSyHa/6aAYWW984xjcmqA9XFYX3vgQ6zzXUeui7mHTX4l4mlSofXEU7H7/3HfcHeKXE7GPZLzB26iwzCgSdoLjoXKzC9n6qhiuKnBV1k3M64pkhR7ZXopJZyB1/PRthu0K+WavayDf0TDJlAJLcezAJc7+rl/DFVklLxmYUKJiEQG5xO+DtzDQ/+Vh9d/TfDRO6sy6zeT22T79Zi2NIH7M80bbV0FbH5RJIGy+IvZ0LFA8Z1uDItpRSdwyb/I8lE1G5wbMrqf5oWlmBC0kdYNBg8F5Y4qNfYy3YEGHXgyaMXDef3DBpSAYqNHER+qlbRXvqj+jDMVgRQ+30NDY9LlShp8iF1Z91igMB5tVNsft1JUF4=
+  app: agile-chamber-30676
+  on:
+    repo: munizeverton/sistemaacademico

@@ -11,8 +11,8 @@ class PeriodosSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Periodo::create(['nome' => 'Matutino']);
-        \App\Models\Periodo::create(['nome' => 'Vespertino']);
-        \App\Models\Periodo::create(['nome' => 'Noturno']);
+        \App\Models\Periodo::create(['id' => 1, 'nome' => 'Matutino']);
+        \App\Models\Periodo::create(['id' => 2, 'nome' => 'Vespertino']);
+        \App\Models\Periodo::create(['id' => 3, 'nome' => 'Noturno']);
     }
 }

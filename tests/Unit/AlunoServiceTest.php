@@ -16,12 +16,6 @@ class AlunoServiceTest extends AlunoBaseTest
 {
     use DatabaseTransactions;
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     * @throws \Exception
-     */
     public function testStoreAluno()
     {
         $service = $this->getService();

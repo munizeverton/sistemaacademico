@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Curso withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Curso withoutTrashed()
  * @mixin \Eloquent
+ * @property int $duracao Duração do curso em meses
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Curso whereDuracao($value)
  */
 class Curso extends Model
 {
@@ -37,4 +39,12 @@ class Curso extends Model
 
     protected $table = 'cursos';
 
+    protected $fillable = [
+        'id',
+        'nome',
+        'valor_matricula',
+        'valor_mensalidade',
+        'duracao',
+        'periodo_id',
+    ];
 }
