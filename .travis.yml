@@ -1,22 +1,23 @@
 language: php
 services:
-- postgresql
+  - postgresql
 directories:
-- $HOME/.composer/cache/files
+  - $HOME/.composer/cache/files
 php:
-- 7.1
-- 7.2
+  - 7.1
+  - 7.2
 before_script:
-- psql -c 'create database sistemaacademico_test;' -U postgres
-- composer install --prefer-dist
-- php artisan --env=travis migrate
-- sudo chmod 777 storage/ -R
+  - psql -c 'create database sistemaacademico_test;' -U postgres
+  - composer install --prefer-dist
+  - php artisan --env=travis migrate
+  - sudo chmod 777 storage/ -R
 env:
-- APP_ENV=travis
+  - APP_ENV=travis
 script: phpunit --testsuite Unit
+
 notifications:
   email:
-  - munizeverton@gmail.com
+    - munizeverton@gmail.com
 addons:
   code_climate:
     repo_token: d940a9fc258f0d8358d907593f910137e96f19d65553632beacd35ecbda59f1a
