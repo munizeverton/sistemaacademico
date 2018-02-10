@@ -35,7 +35,7 @@ class CursoServiceTest extends CursoBaseTest
             'nome' => $faker->name,
             'valor_matricula' => $faker->randomFloat(),
             'valor_mensalidade' => $faker->randomFloat(),
-            'duracao' => $faker->numberBetween(0, 12),
+            'duracao' => $faker->numberBetween(1, 12),
             'periodo_id' => 1,
         ]);
         $service = $this->getService();

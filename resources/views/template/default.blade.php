@@ -38,13 +38,18 @@
     </div>
 </div>
 
+@php
+    $routeArray = explode('.', \Request::route()->getName());
+    $routeName = $routeArray[0];
+@endphp
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="/alunos">Alunos <span class="sr-only">(current)</span></a></li>
-                <li><a href="/cursos">Cursos</a></li>
-                <li><a href="/matriculas">Matriculas</a></li>
+                <li @if($routeName == 'alunos')class="active"@endif><a href="/alunos">Alunos</a></li>
+                <li @if($routeName == 'cursos')class="active"@endif><a href="/cursos">Cursos</a></li>
+                <li @if($routeName == 'matriculas')class="active"@endif><a href="/matriculas">Matriculas</a></li>
             </ul>
         </div>
         @yield('content')
@@ -59,20 +64,20 @@
 <script src="/js/bootstrap-notify.min.js"></script>
 
 <script>
-    @if(Session::has('flash-message'))
-        var type = 'success';
-        @if(Session::has('alert-type'))
-            type = '{{Session::get('alert-type')}}';
-        @endif
-        $.notify({
-            message: '{{Session::get('flash-message')}}'
-        }, {
-            type: type,
-            placement: {
-                align: 'center',
-                from: "top"
-            }
-        });
+            @if(Session::has('flash-message'))
+    var type = 'success';
+    @if(Session::has('alert-type'))
+        type = '{{Session::get('alert-type')}}';
+    @endif
+    $.notify({
+        message: '{{Session::get('flash-message')}}'
+    }, {
+        type: type,
+        placement: {
+            align: 'center',
+            from: "top"
+        }
+    });
     @endif
 </script>
 

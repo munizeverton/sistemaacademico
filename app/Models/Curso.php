@@ -32,6 +32,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property int $duracao Duração do curso em meses
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Curso whereDuracao($value)
+ * @property-read mixed $valor_matricula_formatted
+ * @property-read mixed $valor_mensalidade_formatted
+ * @property-read \App\Models\Periodo $periodo
  */
 class Curso extends Model
 {

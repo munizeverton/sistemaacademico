@@ -31,7 +31,7 @@ class CursoRequest extends FormRequest
             'valor_mensalidade' => 'required|min:0',
             'valor_matricula' => 'required|min:0',
             'periodo_id' => 'required',
-            'duracao' => 'numeric|min:0'
+            'duracao' => 'required|numeric|min:0'
         ];
 
         return $rules;
@@ -48,8 +48,9 @@ class CursoRequest extends FormRequest
             'valor_matricula.numeric' => 'O campo Valor da Matrícula precisa ser um número',
             'valor_matricula.min' => 'O campo Valor da Matrícula precisa ser maior que 0',
             'periodo_id.required' => 'O campo Período é obrigatório',
-            'duracao.numeric' => 'O campo Mesus de Duração precisa ser um número',
-            'duracao.min' => 'O campo Mesus de Duração precisa ser maior que 0',
+            'duracao.required' => 'O campo Duração precisa ser um número',
+            'duracao.numeric' => 'O campo Meses de Duração precisa ser um número',
+            'duracao.min' => 'O campo Meses de Duração precisa ser maior que 0',
         ];
 
         return $messages;
