@@ -65,7 +65,24 @@ class Matricula extends Model
 
     public function isPagamentoPendente()
     {
-        return true;
+        $matricula = Pagamento::whereMatriculaId($this->id)
+            ->where('tipo_pagamento_id', TipoPagamento::MATRICULA)
+            ->where('data_pagamento', null)
+            ->first();
+
+        if (!empty($matricula)) {
+            return true;
+        }
+
+        $pagamentosVencidos = Pagamento::whereMatriculaId($this->id)
+            ->where('tipo_pagamento_id', TipoPagamento::MENSALIDADE)
+            ->where('data_pagamento', null)
+            ->where('data', '>', (new \DateTime()))
+            ->get();
+
+        dd($pagamentosVencidos);
+
+        return false;
     }
 
     public function isAtiva()

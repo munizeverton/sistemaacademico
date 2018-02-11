@@ -13,14 +13,7 @@ class MatriculaTest extends MatriculaBaseTest
 
     public function testCheckMatriculaIsAtiva()
     {
-        $seeder = new class() extends Seeder {
-            public function run()
-            {
-                $this->call(\MatriculaTestSeeder::class);
-            }
-        };
-        $seeder->run();
-
+        $this->runSeeder();
         $matricula = Matricula::create([
             'id' => 1,
             'aluno_id' => 1,
@@ -34,14 +27,8 @@ class MatriculaTest extends MatriculaBaseTest
 
     public function testCheckMatriculaIsInativa()
     {
-        $seeder = new class() extends Seeder {
-            public function run()
-            {
-                $this->call(\MatriculaTestSeeder::class);
-            }
-        };
-        $seeder->run();
-
+        $this->runSeeder();
+        $this->getService();
         $matricula = Matricula::create([
             'aluno_id' => 1,
             'curso_id' => 1,
@@ -65,5 +52,24 @@ class MatriculaTest extends MatriculaBaseTest
             'data_cancelamento' => null
         ]);
         $this->assertFalse($matricula->isAtiva());
+    }
+
+    public function testMatriculaPagamentoPendente()
+    {
+        $this->runSeeder();
+        $matricula = $this->getService()->store(1,1,date('Y'));
+        $this->assertTrue($matricula->isPagamentoPendente());
+    }
+
+    private function runSeeder()
+    {
+        $seeder = new class() extends Seeder
+        {
+            public function run()
+            {
+                $this->call(\MatriculaTestSeeder::class);
+            }
+        };
+        $seeder->run();
     }
 }
