@@ -30,6 +30,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property int $ano
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Matricula whereAno($value)
+ * @property string|null $data_cancelamento
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Matricula whereDataCancelamento($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Pagamento[] $pagamentos
  */
 class Matricula extends Model
 {
@@ -42,6 +45,7 @@ class Matricula extends Model
         'aluno_id',
         'curso_id',
         'ano',
+        'data_cancelamento',
     ];
 
     public function aluno()
@@ -52,5 +56,36 @@ class Matricula extends Model
     public function curso()
     {
         return $this->belongsTo(Curso::class);
+    }
+
+    public function pagamentos()
+    {
+        return $this->hasMany(Pagamento::class);
+    }
+
+    public function isPagamentoPendente()
+    {
+        return true;
+    }
+
+    public function isAtiva()
+    {
+        if (!empty($this->data_cancelamento)) {
+            return false;
+        }
+
+        $inicioCurso = (new \DateTime('first day of January ' . $this->ano));
+        $fimCurso = clone $inicioCurso;
+        $fimCurso = $fimCurso->modify(sprintf('+%s month', $this->curso->duracao));
+
+        if (time() > $fimCurso->getTimestamp()) {
+            return false;
+        }
+
+        if (time() < $inicioCurso->getTimestamp()) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -19,6 +19,7 @@ class CreateMatriculasTable extends Migration
             $table->integer('curso_id')->unsigned();
             $table->integer('aluno_id')->unsigned();
             $table->integer('ano')->unsigned();
+            $table->date('data_cancelamento')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

@@ -54,6 +54,13 @@ class MatriculaService
         return $matricula;
     }
 
+    public function list($filters)
+    {
+        $matriculas = Matricula::query();
+
+        return $matriculas->get();
+    }
+
     private function validatePeriodoEAno($idAluno, $idCurso, $ano)
     {
         $curso = Curso::find($idCurso);

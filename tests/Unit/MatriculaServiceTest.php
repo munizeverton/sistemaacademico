@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Matricula;
+use App\Models\Pagamento;
 use App\Service\MatriculaService;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -17,7 +18,6 @@ class MatriculaServiceTest extends CursoBaseTest
     public function testStoreMatricula()
     {
         $service = $this->getService();
-
         $seeder = new class() extends Seeder {
             public function run()
             {
@@ -37,6 +37,22 @@ class MatriculaServiceTest extends CursoBaseTest
 
         $this->expectExceptionMessage('Curso não encontrado');
         $service->store(1, 2, 2018);
+    }
+
+    public function testStorePagamentosMatricula()
+    {
+        $service = $this->getService();
+        $seeder = new class() extends Seeder {
+            public function run()
+            {
+                $this->call(\MatriculaTestSeeder::class);
+            }
+        };
+        $seeder->run();
+
+        $service->store(1, 1, 2018);
+
+        $this->assertCount(13, Pagamento::class);
     }
 
     /**
