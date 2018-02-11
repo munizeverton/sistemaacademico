@@ -32,9 +32,9 @@
                             <td>{{$matricula->aluno->nome}}</td>
                             <td>
                                 @if($matricula->isPagamentoPendente())
-                                    <img src="/icons/icon-active.png" title="Ativa" data-toggle="tooltip" class="table-icon">
+                                    <img src="/icons/icon-active.png" title="Nenhum pagamento pendente" data-toggle="tooltip" class="table-icon">
                                 @else
-                                    <img src="/icons/icon-inactive.png" title="Inativa" data-toggle="tooltip" class="table-icon">
+                                    <img src="/icons/icon-inactive.png" title="Pagamento pendente" data-toggle="tooltip" class="table-icon">
                                 @endif
                             </td>
                             <td>

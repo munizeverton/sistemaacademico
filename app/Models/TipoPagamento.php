@@ -30,4 +30,7 @@ class TipoPagamento extends Model
     protected $fillable = [
         'id',
     ];
+
+    const MATRICULA = 1;
+    const MENSALIDADE = 2;
 }

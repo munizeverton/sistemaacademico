@@ -19,8 +19,8 @@ class CreatePagamentosTable extends Migration
             $table->dateTime('data');
             $table->float('valor');
 
-            $table->dateTime('data_pagamento');
-            $table->float('valor_pago');
+            $table->dateTime('data_pagamento')->nullable();
+            $table->float('valor_pago')->nullable();
 
             $table->integer('matricula_id')->unsigned();
             $table->integer('tipo_pagamento_id')->unsigned();

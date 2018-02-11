@@ -50,9 +50,9 @@ class MatriculaServiceTest extends CursoBaseTest
         };
         $seeder->run();
 
-        $service->store(1, 1, 2018);
+        $matricula = $service->store(1, 1, 2018);
 
-        $this->assertCount(13, Pagamento::class);
+        $this->assertCount(13, Pagamento::whereMatriculaId($matricula->id)->get());
     }
 
     /**

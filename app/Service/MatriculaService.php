@@ -11,6 +11,8 @@ namespace App\Service;
 use App\Models\Aluno;
 use App\Models\Curso;
 use App\Models\Matricula;
+use App\Models\Pagamento;
+use App\Models\TipoPagamento;
 use Illuminate\Validation\ValidationException;
 
 class MatriculaService
@@ -47,6 +49,7 @@ class MatriculaService
             $matricula->curso_id = $idCurso;
             $matricula->ano = $ano;
             $matricula->save();
+            $this->createPagamentos($matricula);
         } catch (\Exception $e) {
             throw new \Exception('Ocorreu um erro ao realizar a matricula');
         }
@@ -72,7 +75,7 @@ class MatriculaService
                   AND matriculas.ano = :ano
                   AND cursos.periodo_id = :periodo';
 
-        $result = \DB::select($sql, ['aluno'=>$idAluno, 'ano' => $ano, 'periodo' => $curso->periodo_id]);
+        $result = \DB::select($sql, ['aluno' => $idAluno, 'ano' => $ano, 'periodo' => $curso->periodo_id]);
 
         if (!empty($result)) {
             $error = ValidationException::withMessages([
@@ -80,6 +83,32 @@ class MatriculaService
             ]);
 
             throw $error;
+        }
+    }
+
+    /**
+     * @param Matricula $matricula
+     */
+    private function createPagamentos($matricula)
+    {
+        Pagamento::create([
+            'data' => (new \DateTime()),
+            'valor' => $matricula->curso->valor_matricula,
+            'matricula_id' => $matricula->id,
+            'tipo_pagamento_id' => TipoPagamento::MATRICULA,
+        ]);
+
+        $duracao = $matricula->curso->duracao;
+
+        for ($cont = 0; $cont < $duracao; $cont++) {
+            $inicioCurso = (new \DateTime('first day of January ' . $matricula->ano));
+            $data = $inicioCurso->modify(sprintf('+%s month', $cont));
+            Pagamento::create([
+                'data' => $data,
+                'valor' => $matricula->curso->valor_mensalidade,
+                'matricula_id' => $matricula->id,
+                'tipo_pagamento_id' => TipoPagamento::MENSALIDADE,
+            ]);
         }
     }
 }

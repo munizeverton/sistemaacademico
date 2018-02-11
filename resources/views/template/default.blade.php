@@ -49,7 +49,7 @@
             <ul class="nav nav-sidebar">
                 <li @if($routeName == 'alunos')class="active"@endif><a href="/alunos">Alunos</a></li>
                 <li @if($routeName == 'cursos')class="active"@endif><a href="/cursos">Cursos</a></li>
-                <li @if($routeName == 'matriculas')class="active"@endif><a href="/matriculas">Matriculas</a></li>
+                <li @if($routeName == 'matriculas')class="active"@endif><a href="/">Matriculas</a></li>
             </ul>
         </div>
         @yield('content')
