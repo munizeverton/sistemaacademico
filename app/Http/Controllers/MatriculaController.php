@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MatriculaRequest;
+use App\Models\Matricula;
 use App\Service\MatriculaService;
 use Illuminate\Http\Request;
 
@@ -54,5 +55,15 @@ class MatriculaController extends Controller
         $matricula = $this->matriculaService->store($request->get('aluno_id'), $request->get('curso_id'));
 
         return redirect(route('matriculas.dashboard'))->with('flash-message', sprintf('O aluno <b>%s</b> foi matriculado no curso <b>%s</b> com sucesso!', $matricula->aluno->nome, $matricula->curso->nome));
+    }
+
+    /**
+     * Mostra os detalhes da matrícula
+     * @param Matricula $matricula
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(Matricula $matricula)
+    {
+        return view('matricula.show', ['matricula' => $matricula]);
     }
 }

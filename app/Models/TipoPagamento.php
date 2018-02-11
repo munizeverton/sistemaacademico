@@ -21,8 +21,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class TipoPagamento extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'tipos_pagamento';
 
     public $timestamps = false;

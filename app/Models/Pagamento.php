@@ -41,4 +41,39 @@ class Pagamento extends Model
         'matricula_id',
         'tipo_pagamento_id',
     ];
+
+    public function tipo()
+    {
+        return $this->belongsTo(TipoPagamento::class, 'tipo_pagamento_id', 'id');
+    }
+
+    public function getValorFormattedAttribute()
+    {
+        $value = $this->valor;
+        if ($value === null) {
+            return null;
+        }
+
+        return number_format($value, 2, ',', '.');
+    }
+
+    public function getDataFormattedAttribute()
+    {
+        $value = $this->data;
+        if (empty($value)){
+            return null;
+        }
+
+        return (new \DateTime($value))->format('d/m/Y');
+    }
+
+    public function getDataPagamentoFormattedAttribute()
+    {
+        $value = $this->data_pagamento;
+        if (empty($value)){
+            return null;
+        }
+
+        return (new \DateTime($value))->format('d/m/Y');
+    }
 }

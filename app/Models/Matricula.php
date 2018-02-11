@@ -60,7 +60,7 @@ class Matricula extends Model
 
     public function pagamentos()
     {
-        return $this->hasMany(Pagamento::class);
+        return $this->hasMany(Pagamento::class)->orderBy('tipo_pagamento_id')->orderBy('data');
     }
 
     public function isPagamentoPendente()
