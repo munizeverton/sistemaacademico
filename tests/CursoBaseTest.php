@@ -32,18 +32,4 @@ abstract class CursoBaseTest extends TestCase
             'periodo_id' => 1
         ];
     }
-
-    public function setUp()
-    {
-        parent::setUp();
-        \Artisan::call('migrate');
-        \Artisan::call('db:seed', ['--env' => 'testing']);
-    }
-
-
-    public function tearDown()
-    {
-        \Artisan::call('migrate:reset');
-        parent::tearDown();
-    }
 }
