@@ -80,7 +80,9 @@ class Matricula extends Model
             ->where('data', '>', (new \DateTime()))
             ->get();
 
-        dd($pagamentosVencidos);
+        if (!empty($pagamentosVencidos->all())) {
+            return true;
+        }
 
         return false;
     }

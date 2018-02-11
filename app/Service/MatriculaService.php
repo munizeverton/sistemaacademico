@@ -51,7 +51,7 @@ class MatriculaService
             $matricula->save();
             $this->createPagamentos($matricula);
         } catch (\Exception $e) {
-            throw new \Exception('Ocorreu um erro ao realizar a matricula');
+            throw new \Exception('Ocorreu um erro ao realizar a matricula' . $e->getMessage());
         }
 
         return $matricula;
@@ -59,9 +59,16 @@ class MatriculaService
 
     public function list($filters)
     {
-        $matriculas = Matricula::query();
+        $result = Matricula::orderByDesc('ano')->get();
 
-        return $matriculas->get();
+        $matriculas = [];
+        foreach ($result as $matricula) {
+            if ($this->filter($filters, $matricula)) {
+                $matriculas[] = $matricula;
+            }
+        }
+
+        return $matriculas;
     }
 
     private function validatePeriodoEAno($idAluno, $idCurso, $ano)
@@ -110,5 +117,43 @@ class MatriculaService
                 'tipo_pagamento_id' => TipoPagamento::MENSALIDADE,
             ]);
         }
+    }
+
+    /**
+     * @param array $filters
+     * @param Matricula $matricula
+     * @return bool
+     */
+    private function filter($filters, $matricula)
+    {
+        if (!isset($filters['status'])) {
+            $filters['status'] = 'ativos';
+        }
+
+        if ($filters['status'] == 'ativos') {
+            if (!$matricula->isAtiva()) {
+                return false;
+            }
+        }
+
+        if ($filters['status'] == 'inativos') {
+            if ($matricula->isAtiva()) {
+                return false;
+            }
+        }
+
+        if (isset($filters['pagamento']) && $filters['pagamento'] == 'inadimplente') {
+            if (!$matricula->isPagamentoPendente()) {
+                return false;
+            }
+        }
+
+        if (isset($filters['pagamento']) && $filters['pagamento'] == 'adimplente') {
+            if ($matricula->isPagamentoPendente()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
