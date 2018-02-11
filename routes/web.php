@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'MatriculaController@index')->name('matriculas.dashboard');
+Route::get('/matriculas/create', 'MatriculaController@create')->name('matriculas.create');
+Route::post('/matriculas/store', 'MatriculaController@store')->name('matriculas.store');
 
 Route::resource('alunos', 'AlunoController');
 Route::resource('cursos', 'CursoController');

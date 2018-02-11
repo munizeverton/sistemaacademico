@@ -70,7 +70,7 @@
         type = '{{Session::get('alert-type')}}';
     @endif
     $.notify({
-        message: '{{Session::get('flash-message')}}'
+        message: '{!!Session::get('flash-message')!!}'
     }, {
         type: type,
         placement: {
