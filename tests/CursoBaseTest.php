@@ -5,7 +5,7 @@ namespace Tests;
 use App\Models\Curso;
 use App\Service\CursoService;
 
-abstract class CursoBaseTest extends TestCase
+abstract class CursoBaseTest extends DatabaseTestCase
 {
     /**
      * @return CursoService

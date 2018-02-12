@@ -5,7 +5,7 @@ namespace Tests;
 use App\Models\Aluno;
 use App\Service\AlunoService;
 
-abstract class AlunoBaseTest extends TestCase
+abstract class AlunoBaseTest extends DatabaseTestCase
 {
     /**
      * @return AlunoService

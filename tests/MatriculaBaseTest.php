@@ -6,7 +6,7 @@ use App\Models\Curso;
 use App\Service\CursoService;
 use App\Service\MatriculaService;
 
-abstract class MatriculaBaseTest extends TestCase
+abstract class MatriculaBaseTest extends DatabaseTestCase
 {
     /**
      * @return MatriculaService
