@@ -2,12 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Curso;
 use App\Models\Periodo;
 use App\Service\CursoService;
-use Illuminate\Console\Command;
 
-class ImportCourses extends Command
+class ImportCourses extends ImportCsvCommand
 {
     const DELIMITER = ',';
     /**
@@ -24,10 +22,7 @@ class ImportCourses extends Command
      */
     protected $description = 'Importa cursos a partir do CSV';
 
-
-    private $file;
-
-    private $arrayLines;
+    private $cursoService;
 
 
     /**
@@ -45,9 +40,12 @@ class ImportCourses extends Command
      * Execute the console command.
      *
      * @return mixed
+     * @throws \Exception
      */
     public function handle()
     {
+        \DB::beginTransaction();
+
         $fileName = $this->argument('file');
         $this->readFile($fileName);
         $this->info('Inciando importação...');
@@ -59,30 +57,8 @@ class ImportCourses extends Command
         }
 
         $bar->finish();
-    }
 
-    private function readFile($file)
-    {
-        try {
-            $handle = file($file);
-        } catch (\Exception $e) {
-            $this->error('Não foi possível ler o arquivo');
-            throw $e;
-        }
-
-        if ($handle === false) {
-            $this->error('Arquivo não encontrado');
-            throw new \Exception('Arquivo não encontrado');
-        }
-
-        unset($handle[0]);
-
-        $this->arrayLines = $handle;
-    }
-
-    private function getLines()
-    {
-        return $this->arrayLines;
+        \DB::commit();
     }
 
     private function importCursoByCsvLine($line)
@@ -107,10 +83,5 @@ class ImportCourses extends Command
         $curso = $this->cursoService->store($data);
 
         $this->info(' - Curso ' . $curso->nome . ' importado');
-    }
-
-    private function getColumn($column, $line)
-    {
-        return str_replace('"', '', $line[$column]);
     }
 }

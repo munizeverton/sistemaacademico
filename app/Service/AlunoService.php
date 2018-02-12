@@ -33,7 +33,7 @@ class AlunoService
 
             $aluno->save();
         } catch (\Exception $e) {
-            throw new \Exception('Ocorreu um erro ao gravar o aluno');
+            throw new \Exception('Ocorreu um erro ao gravar o aluno ' . $e->getMessage());
         }
 
         return $aluno;
