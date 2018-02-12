@@ -13,12 +13,7 @@
         <h1 class="page-header">Dashboard de Matrícula</h1>
         <div class="row">
             <div class="col-sm-9">
-                <a class="btn btn-danger" href="{{ route('matriculas.destroy',['matricula' => $matricula->id]) }}"
-                   onclick="event.preventDefault();destroyAluno()">Cancelar Matrícula</a>
-                {{Form::open(['route' => ['matriculas.destroy',$matricula->id],'method' => 'DELETE', 'id' => 'form-delete'])}}
-                {{Form::close()}}
-            </div>
-            <div class="col-sm-3">
+                <a class="btn btn-danger" @if(!$matricula->isAtiva()) disabled @endif href="@if($matricula->isAtiva()){{ route('matriculas.cancelar',['matricula' => $matricula->id]) }}@endif">Cancelar Matrícula</a>
                 @if($matricula->isPagamentoPendente())<span class="label label-warning">Pagamento pendente</span>@endif
                 @if(!$matricula->isAtiva()) <span class="label label-danger">Inativa</span>@endif
             </div>
@@ -124,23 +119,4 @@
 @endsection
 @section('specific-scripts')
     <script src="/js/sweetalert.min.js"></script>
-    <script>
-        function destroyAluno() {
-            swal({
-                title: "Tem certeza?",
-                text: "Tem certeza que deseja cancelar essa matrícula",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Sim, cancelar matrícula",
-                cancelButtonText: "Cancelar",
-                closeOnConfirm: false
-            }, function (isConfirm) {
-                if (isConfirm) {
-                    swal("Aguarde...");
-                    $('#form-delete').submit();
-                }
-            });
-        }
-    </script>
 @endsection

@@ -51,7 +51,7 @@ class MatriculaService
             $matricula->save();
             $this->createPagamentos($matricula);
         } catch (\Exception $e) {
-            throw new \Exception('Ocorreu um erro ao realizar a matricula' . $e->getMessage());
+            throw new \Exception('Ocorreu um erro ao realizar a matricula');
         }
 
         return $matricula;
@@ -71,6 +71,13 @@ class MatriculaService
         return $matriculas;
     }
 
+    /**
+     * Valida se o aluno já está matriculado em outro curso no mesmo período
+     * @param integer $idAluno
+     * @param integer $idCurso
+     * @param integer $ano
+     * @throws ValidationException
+     */
     private function validatePeriodoEAno($idAluno, $idCurso, $ano)
     {
         $curso = Curso::find($idCurso);
@@ -94,6 +101,7 @@ class MatriculaService
     }
 
     /**
+     * Cria os pagamentos da matrícula
      * @param Matricula $matricula
      */
     private function createPagamentos($matricula)
@@ -120,12 +128,14 @@ class MatriculaService
     }
 
     /**
+     * Aplica o filtro nos dados
      * @param array $filters
      * @param Matricula $matricula
      * @return bool
      */
     private function filter($filters, $matricula)
     {
+
         if (!isset($filters['status'])) {
             $filters['status'] = 'ativos';
         }
@@ -157,26 +167,38 @@ class MatriculaService
         return true;
     }
 
+    /**
+     * Retorna a quantidade de notas e moedas para o troco a partir dos valores informados
+     * @param float $valorCobrado
+     * @param float $valorPago
+     * @return string
+     */
     public function calculaTroco($valorCobrado, $valorPago)
     {
         $textoArray = [];
         $troco = CalculoTroco::calcula($valorCobrado, $valorPago);
         foreach ($troco['notas'] as $nota => $quantidade) {
-            $textoArray[] = sprintf( '%s nota(s) de %s', $quantidade, $nota);
+            $textoArray[] = sprintf('%s nota(s) de %s', $quantidade, $nota);
         }
 
         foreach ($troco['moedas'] as $moeda => $quantidade) {
-            $textoArray[] = sprintf( '%s moeda(s) de %s', $quantidade, $moeda);
+            $textoArray[] = sprintf('%s moeda(s) de %s', $quantidade, $moeda);
         }
 
         return implode(PHP_EOL, $textoArray);
     }
 
+    /**
+     * Grava o pagamento de uma mensalidade ou matrícula
+     * @param array $data
+     * @return Matricula
+     * @throws ValidationException
+     */
     public function storePagamento($data)
     {
         $pagamento = Pagamento::find($data['pagamento']);
         $valorCobrado = $pagamento->valor;
-        $valorPago = str_replace(',', '.', str_replace('.','', $data['valor_entregue']));
+        $valorPago = str_replace(',', '.', str_replace('.', '', $data['valor_entregue']));
 
         if ($valorCobrado > $valorPago) {
             $error = ValidationException::withMessages([
@@ -191,5 +213,40 @@ class MatriculaService
         $pagamento->save();
 
         return $pagamento->matricula;
+    }
+
+    /**
+     * Retorna o valor da multa ao cancelar uma matricula
+     * A multa cobrada é de 1% do valor da mensalidade ao mês não cumprido
+     * @param Matricula $matricula
+     * @return float
+     */
+    public function getMultaCancelamento($matricula)
+    {
+        $curso = $matricula->curso;
+        $duracao = $curso->duracao;
+        $inicioCurso = (new \DateTime('first day of January ' . $matricula->ano));
+        $fimCurso = clone $inicioCurso;
+        $fimCurso = $fimCurso->modify(sprintf('+%s month', $duracao));
+
+        $mesesRestantes = ((new \DateTime())->diff($fimCurso)->m);
+        $multa = round($curso->valor_mensalidade + (($curso->valor_mensalidade / 100) * $mesesRestantes), 2);
+        return $multa;
+    }
+
+
+    /**
+     * Cancela uma matrícula
+     * @param Matricula $matricula
+     * @throws \Exception
+     */
+    public function cancelarMatricula($matricula)
+    {
+        try {
+            $matricula->data_cancelamento = new \DateTime();
+            $matricula->save();
+        } catch (\Exception $e) {
+            throw new \Exception('Ocorreu um erro ao cancelar a matricula');
+        }
     }
 }

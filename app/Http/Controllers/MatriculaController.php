@@ -54,9 +54,15 @@ class MatriculaController extends Controller
      */
     public function store(MatriculaRequest $request)
     {
+        \DB::beginTransaction();
+
         $matricula = $this->matriculaService->store($request->get('aluno_id'), $request->get('curso_id'));
 
-        return redirect(route('matriculas.dashboard'))->with('flash-message', sprintf('O aluno <b>%s</b> foi matriculado no curso <b>%s</b> com sucesso!', $matricula->aluno->nome, $matricula->curso->nome));
+        \DB::commit();
+
+        return redirect(route('matriculas.dashboard'))->with('flash-message',
+            sprintf('O aluno <b>%s</b> foi matriculado no curso <b>%s</b> com sucesso!', $matricula->aluno->nome,
+                $matricula->curso->nome));
     }
 
     /**
@@ -77,7 +83,7 @@ class MatriculaController extends Controller
     public function calculoTroco(Request $request)
     {
         $valorCobrado = Pagamento::find($request->get('pagamento'))->valor;
-        $valorPago = str_replace(',', '.', str_replace('.','', $request->get('valor_entregue')));
+        $valorPago = str_replace(',', '.', str_replace('.', '', $request->get('valor_entregue')));
 
         if ($valorCobrado == $valorPago) {
             return response()->json(['error' => 'Não será necessário troco'], 400);
@@ -94,6 +100,28 @@ class MatriculaController extends Controller
     {
         $matricula = $this->matriculaService->storePagamento($request->all());
 
-        return redirect(route('matriculas.show', ['matricula' => $matricula->id]))->with('flash-message', 'Pagamento registrado com sucesso');
+        return redirect(route('matriculas.show', ['matricula' => $matricula->id]))->with('flash-message',
+            'Pagamento registrado com sucesso');
+    }
+
+    public function cancelar(Matricula $matricula)
+    {
+        return view('matricula.cancelar', [
+            'matricula' => $matricula,
+            'multaCancelamento' => $this->matriculaService->getMultaCancelamento($matricula),
+        ]);
+    }
+
+    /**
+     * Cancela uma matrícula
+     * @param Matricula $matricula
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Matricula $matricula)
+    {
+        $this->matriculaService->cancelarMatricula($matricula);
+
+        return redirect(route('matriculas.show', ['matricula' => $matricula->id]))->with('flash-message',
+            'Matrícula cancelada com sucesso');
     }
 }

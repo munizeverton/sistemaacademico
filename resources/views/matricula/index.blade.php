@@ -19,7 +19,7 @@
                 <div id="toolbar">
                     <div class="col-sm-2 pull-left select-filter">
                         <select name="status" class="form-control">
-                            <option value="" @if(\Request::get('status') == '') selected @endif>Todos os status</option>
+                            <option value="todos" @if(\Request::get('status') == 'todos') selected @endif>Todos os status</option>
                             <option value="ativos" @if(\Request::get('status') == 'ativos' || empty(\Request::get('status'))) selected @endif>Matrículas ativas</option>
                             <option value="inativos" @if(\Request::get('status') == 'inativos') selected @endif>Matrículas inativas</option>
                         </select>
@@ -28,7 +28,7 @@
                 <div id="toolbar">
                     <div class="col-sm-2 pull-left">
                         <select name="pagamento" class="form-control select-filter">
-                            <option value="" @if(\Request::get('pagamento') == '') selected @endif>Todos os status de pagamento</option>
+                            <option value="todos" @if(\Request::get('pagamento') == 'todos') selected @endif>Todos os status de pagamento</option>
                             <option value="inadimplente" @if(\Request::get('pagamento') == 'inadimplente') selected @endif>Inadimplente</option>
                             <option value="adimplente" @if(\Request::get('pagamento') == 'adimplente') selected @endif>Adimplente</option>
                         </select>

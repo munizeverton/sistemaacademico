@@ -29,7 +29,7 @@ $matricula = $pagamento->matricula;
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <h3>Dados do pagamento</h3>
+                <h3>Dados da matrícula</h3>
                 @php
                     $aluno = $matricula->aluno;
                     $curso = $matricula->curso;
