@@ -34,19 +34,21 @@ class MatriculaService
 
         $matricula = new Matricula();
 
-        if (!(Aluno::find($idAluno)) instanceof Aluno) {
+        $aluno = Aluno::find($idAluno);
+        if (!($aluno) instanceof Aluno) {
             throw new \Exception('Aluno não encontrado');
         }
 
-        if (!(Curso::find($idCurso)) instanceof Curso) {
+        $curso = Curso::find($idCurso);
+        if (!($curso) instanceof Curso) {
             throw new \Exception('Curso não encontrado');
         }
 
-        $this->validatePeriodoEAno($idAluno, $idCurso, $ano);
+        $this->validatePeriodoEAno($aluno, $curso, $ano);
 
         try {
-            $matricula->aluno_id = $idAluno;
-            $matricula->curso_id = $idCurso;
+            $matricula->aluno_id = $aluno->id;
+            $matricula->curso_id = $curso->id;
             $matricula->ano = $ano;
             $matricula->save();
             $this->createPagamentos($matricula);
@@ -73,15 +75,13 @@ class MatriculaService
 
     /**
      * Valida se o aluno já está matriculado em outro curso no mesmo período
-     * @param integer $idAluno
-     * @param integer $idCurso
+     * @param Aluno $aluno
+     * @param Curso $curso
      * @param integer $ano
      * @throws ValidationException
      */
-    private function validatePeriodoEAno($idAluno, $idCurso, $ano)
+    private function validatePeriodoEAno(Aluno $aluno, Curso $curso, $ano)
     {
-        $curso = Curso::find($idCurso);
-
         $sql = 'SELECT * FROM alunos
                 JOIN matriculas ON alunos.id = matriculas.aluno_id
                 JOIN cursos ON matriculas.curso_id = cursos.id
@@ -89,7 +89,7 @@ class MatriculaService
                   AND matriculas.ano = :ano
                   AND cursos.periodo_id = :periodo';
 
-        $result = \DB::select($sql, ['aluno' => $idAluno, 'ano' => $ano, 'periodo' => $curso->periodo_id]);
+        $result = \DB::select($sql, ['aluno' => $aluno->id, 'ano' => $ano, 'periodo' => $curso->periodo_id]);
 
         if (!empty($result)) {
             $error = ValidationException::withMessages([

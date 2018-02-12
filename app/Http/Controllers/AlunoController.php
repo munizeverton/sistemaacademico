@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AlunoRequest;
 use App\Models\Aluno;
 use App\Service\AlunoService;
+use Illuminate\Http\Request;
 
 class AlunoController extends Controller
 {
@@ -24,10 +25,13 @@ class AlunoController extends Controller
 
     /**
      * Action que monta a lista de alunos
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
-    public function index()
+    public function index(Request $request)
     {
-        $alunos = $this->alunoService->list(false);
+        $alunos = $this->alunoService->list(true, 10, $request->all());
 
         return view('aluno.index', [
             'alunos' => $alunos,

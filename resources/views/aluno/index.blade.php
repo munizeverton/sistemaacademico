@@ -1,14 +1,30 @@
 @extends('template.default')
 
 @section('specific-styles')
-    <link href="/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
 @endsection
 
 @section('content')
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Alunos</h1>
-        <a href="{{route('alunos.create')}}" class="btn btn-primary">Novo</a><br><br>
+        <div class="row">
+            <form method="GET" id="form-filter">
+                <div class="col-sm-9 pull-left">
+                    <a href="{{route('alunos.create')}}" class="btn btn-primary">Novo</a>
+                </div>
+                <div class="col-sm-3 pull-right">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="nome" placeholder="Nome" value="{{\Request::get('nome')}}">
+                        <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                    </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br>
         @if (empty($alunos))
             <div class="alert alert-warning">Nenhum aluno encontrado</div>
         @else
@@ -47,23 +63,16 @@
                     @endforeach
                     </tbody>
                 </table>
+                {{ $alunos->appends(Request::only('nome'))->links() }}
             </div>
         @endif
     </div>
 @endsection
 
 @section('specific-scripts')
-    <script src="/js/jquery.dataTables.min.js"></script>
-    <script src="/js/dataTables.bootstrap.min.js"></script>
     <script>
         $(function () {
-            $('.datatable').DataTable({
-                "language": {
-                    "url": "js/Portuguese-Brasil.json"
-                }
-            });
             $('[data-toggle="tooltip"]').tooltip()
-
         })
     </script>
 @endsection

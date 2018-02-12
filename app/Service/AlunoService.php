@@ -25,6 +25,7 @@ class AlunoService
         $aluno = new Aluno();
 
         try {
+            $aluno->id = isset($data['id']) ? $data['id'] : 0;
             $aluno->cpf = $data['cpf'];
             $aluno->nome = $data['nome'];
             $aluno->rg = $data['rg'];
@@ -66,13 +67,18 @@ class AlunoService
      *
      * @param bool $paginate
      * @param int $pageSize
+     * @param array $filter
      * @return Collection
      * @throws \Exception
      */
-    public function list($paginate = true, $pageSize = 10)
+    public function list($paginate = true, $pageSize = 10, $filter = [])
     {
         try {
-            $aluno = Aluno::query();
+            $aluno = Aluno::query()->orderBy('nome');
+
+            if (isset($filter['nome']) && !empty($filter['nome'])) {
+                $aluno->where('nome', 'ILIKE', '%' . $filter['nome'] . '%');
+            }
 
             if ($paginate) {
                 return $aluno->paginate($pageSize);
