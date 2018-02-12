@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <th scope="row" width="20%">Duração</th>
-                <td>{{$curso->duracao}}</td>
+                <td>{{$curso->duracao}} meses</td>
             </tr>
             </tbody>
         </table>

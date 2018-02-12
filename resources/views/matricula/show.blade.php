@@ -80,7 +80,7 @@
                     </tr>
                     <tr>
                         <th scope="row" width="20%">Duração</th>
-                        <td>{{$curso->duracao}}</td>
+                        <td>{{$curso->duracao}} meses</td>
                     </tr>
                     </tbody>
                 </table>
@@ -109,7 +109,7 @@
                                 @if(!empty($pagamento->data_pagamento_formatted))
                                     {{$pagamento->data_pagamento_formatted}}
                                 @else
-                                    <a class="btn btn-primary" href="/matriculas/pagar/{{$pagamento->id}}">Pagar</a>
+                                    <a class="btn btn-primary" @if(!$matricula->isAtiva()) disabled @endif href="@if($matricula->isAtiva())/matriculas/pagamento/{{$pagamento->id}}@endif">Pagar</a>
                                 @endif
 
                             </td>

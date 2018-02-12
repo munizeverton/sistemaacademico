@@ -77,7 +77,7 @@ class Matricula extends Model
         $pagamentosVencidos = Pagamento::whereMatriculaId($this->id)
             ->where('tipo_pagamento_id', TipoPagamento::MENSALIDADE)
             ->where('data_pagamento', null)
-            ->where('data', '>', (new \DateTime()))
+            ->where('data', '<', (new \DateTime()))
             ->get();
 
         if (!empty($pagamentosVencidos->all())) {

@@ -156,4 +156,40 @@ class MatriculaService
 
         return true;
     }
+
+    public function calculaTroco($valorCobrado, $valorPago)
+    {
+        $textoArray = [];
+        $troco = CalculoTroco::calcula($valorCobrado, $valorPago);
+        foreach ($troco['notas'] as $nota => $quantidade) {
+            $textoArray[] = sprintf( '%s nota(s) de %s', $quantidade, $nota);
+        }
+
+        foreach ($troco['moedas'] as $moeda => $quantidade) {
+            $textoArray[] = sprintf( '%s moeda(s) de %s', $quantidade, $moeda);
+        }
+
+        return implode(PHP_EOL, $textoArray);
+    }
+
+    public function storePagamento($data)
+    {
+        $pagamento = Pagamento::find($data['pagamento']);
+        $valorCobrado = $pagamento->valor;
+        $valorPago = str_replace(',', '.', str_replace('.','', $data['valor_entregue']));
+
+        if ($valorCobrado > $valorPago) {
+            $error = ValidationException::withMessages([
+                'O valor precisa ser igual ou maior que o valor cobrado'
+            ]);
+
+            throw $error;
+        }
+
+        $pagamento->data_pagamento = new \DateTime();
+        $pagamento->valor_pago = $valorCobrado;
+        $pagamento->save();
+
+        return $pagamento->matricula;
+    }
 }

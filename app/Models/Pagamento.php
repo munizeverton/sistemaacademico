@@ -27,6 +27,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Pagamento whereValor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Pagamento whereValorPago($value)
  * @mixin \Eloquent
+ * @property-read mixed $data_formatted
+ * @property-read mixed $data_pagamento_formatted
+ * @property-read mixed $valor_formatted
+ * @property-read \App\Models\Matricula $matricula
+ * @property-read \App\Models\TipoPagamento $tipo
  */
 class Pagamento extends Model
 {
@@ -45,6 +50,11 @@ class Pagamento extends Model
     public function tipo()
     {
         return $this->belongsTo(TipoPagamento::class, 'tipo_pagamento_id', 'id');
+    }
+
+    public function matricula()
+    {
+        return $this->belongsTo(Matricula::class);
     }
 
     public function getValorFormattedAttribute()

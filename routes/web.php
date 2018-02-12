@@ -16,6 +16,9 @@ Route::get('/matriculas/create', 'MatriculaController@create')->name('matriculas
 Route::post('/matriculas/store', 'MatriculaController@store')->name('matriculas.store');
 Route::get('/matriculas/{matricula}', 'MatriculaController@show')->name('matriculas.show');
 Route::delete('/matriculas/{matricula}', 'MatriculaController@cancelar')->name('matriculas.destroy');
+Route::get('/matriculas/pagamento/{pagamento}', 'MatriculaController@pagamento')->name('matriculas.pagamento');
+Route::post('/matriculas/pagamento/{pagamento}', 'MatriculaController@pagar')->name('matriculas.pagar');
+Route::post('/matriculas/calculo-troco', 'MatriculaController@calculoTroco')->name('matriculas.calculo-troco');
 
 Route::resource('alunos', 'AlunoController');
 Route::resource('cursos', 'CursoController');

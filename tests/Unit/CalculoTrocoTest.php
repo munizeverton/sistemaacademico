@@ -67,13 +67,13 @@ class CalculoTrocoTest extends TestCase
     public function testMoedas()
     {
         $troco = CalculoTroco::calcula(99.99, 100);
-        $this->assertEquals(['notas' => [], 'moedas' => ['0.01' => 1]], $troco);
+        $this->assertEquals(['notas' => [], 'moedas' => [1 => 1]], $troco);
 
         $troco = CalculoTroco::calcula(0.50, 1);
-        $this->assertEquals(['notas' => [], 'moedas' => ['0.5' => 1]], $troco);
+        $this->assertEquals(['notas' => [], 'moedas' => [50 => 1]], $troco);
 
         $troco = CalculoTroco::calcula(0.65, 1);
-        $this->assertEquals(['notas' => [], 'moedas' => ['0.1' => 3, '0.05' => 1]], $troco);
+        $this->assertEquals(['notas' => [], 'moedas' => [10 => 3, 5 => 1]], $troco);
     }
 
     public function testNotasEMoedas()
@@ -87,8 +87,8 @@ class CalculoTrocoTest extends TestCase
             ],
             'moedas' => [
                 1 => 2,
-                '0.5'  => 1,
-                '0.1'  => 1,
+                50  => 1,
+                10  => 1,
             ],
         ], $troco);
     }

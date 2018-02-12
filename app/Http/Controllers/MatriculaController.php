@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MatriculaRequest;
 use App\Models\Matricula;
+use App\Models\Pagamento;
+use App\Service\CalculoTroco;
 use App\Service\MatriculaService;
 use Illuminate\Http\Request;
 
@@ -65,5 +67,33 @@ class MatriculaController extends Controller
     public function show(Matricula $matricula)
     {
         return view('matricula.show', ['matricula' => $matricula]);
+    }
+
+    public function pagamento(Pagamento $pagamento)
+    {
+        return view('matricula.pagamento', ['pagamento' => $pagamento]);
+    }
+
+    public function calculoTroco(Request $request)
+    {
+        $valorCobrado = Pagamento::find($request->get('pagamento'))->valor;
+        $valorPago = str_replace(',', '.', str_replace('.','', $request->get('valor_entregue')));
+
+        if ($valorCobrado == $valorPago) {
+            return response()->json(['error' => 'Não será necessário troco'], 400);
+        }
+
+        if ($valorCobrado > $valorPago) {
+            return response()->json(['error' => 'O valor precisa ser igual ou maior que o valor cobrado'], 400);
+        }
+
+        return $this->matriculaService->calculaTroco($valorCobrado, $valorPago);
+    }
+
+    public function pagar(Request $request)
+    {
+        $matricula = $this->matriculaService->storePagamento($request->all());
+
+        return redirect(route('matriculas.show', ['matricula' => $matricula->id]))->with('flash-message', 'Pagamento registrado com sucesso');
     }
 }

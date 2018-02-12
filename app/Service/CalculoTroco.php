@@ -47,7 +47,12 @@ class CalculoTroco
             foreach ($arrayMoedas as $moeda) {
                 $result = round($valorRestante / $moeda, 2);
                 if ($result >= 1) {
-                    $arrayMoedasTroco[(string) round($moeda / 100, 2)] = (int)$result;
+                    if ($moeda == 100) {
+                        $moedaString = 1;
+                    } else {
+                        $moedaString = $moeda;
+                    }
+                    $arrayMoedasTroco[(string) $moedaString] = (int)$result;
                     $valorRestante = $valorRestante % $moeda;
                 }
             }
