@@ -33,7 +33,7 @@ class MatriculaController extends Controller
     public function index(Request $request)
     {
         return view('matricula.index', [
-            'matriculas' => $this->matriculaService->list($request->all()),
+            'retorno' => $this->matriculaService->list($request),
         ]);
     }
 

@@ -5,8 +5,6 @@
 ?>
 
 @section('specific-styles')
-    <link href="/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -19,18 +17,31 @@
                 <div id="toolbar">
                     <div class="col-sm-2 pull-left select-filter">
                         <select name="status" class="form-control">
-                            <option value="todos" @if(\Request::get('status') == 'todos') selected @endif>Todos os status</option>
-                            <option value="ativos" @if(\Request::get('status') == 'ativos' || empty(\Request::get('status'))) selected @endif>Matrículas ativas</option>
-                            <option value="inativos" @if(\Request::get('status') == 'inativos') selected @endif>Matrículas inativas</option>
+                            <option value="todos" @if(\Request::get('status') == 'todos') selected @endif>Todos os
+                                status
+                            </option>
+                            <option value="ativos"
+                                    @if(\Request::get('status') == 'ativos' || empty(\Request::get('status'))) selected @endif>
+                                Matrículas ativas
+                            </option>
+                            <option value="inativos" @if(\Request::get('status') == 'inativos') selected @endif>
+                                Matrículas inativas
+                            </option>
                         </select>
                     </div>
                 </div>
                 <div id="toolbar">
                     <div class="col-sm-2 pull-left">
                         <select name="pagamento" class="form-control select-filter">
-                            <option value="todos" @if(\Request::get('pagamento') == 'todos') selected @endif>Todos os status de pagamento</option>
-                            <option value="inadimplente" @if(\Request::get('pagamento') == 'inadimplente') selected @endif>Inadimplente</option>
-                            <option value="adimplente" @if(\Request::get('pagamento') == 'adimplente') selected @endif>Adimplente</option>
+                            <option value="todos" @if(\Request::get('pagamento') == 'todos') selected @endif>Todos os
+                                status de pagamento
+                            </option>
+                            <option value="inadimplente"
+                                    @if(\Request::get('pagamento') == 'inadimplente') selected @endif>Inadimplente
+                            </option>
+                            <option value="adimplente" @if(\Request::get('pagamento') == 'adimplente') selected @endif>
+                                Adimplente
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -38,7 +49,7 @@
         </div>
         <br>
 
-        @if (empty($matriculas))
+        @if (empty($retorno['lines']))
             <div class="alert alert-warning">Nenhuma matrícula encontrada</div>
         @else
             <div class="table-responsive">
@@ -54,7 +65,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($matriculas as $matricula)
+                    @foreach($retorno['lines'] as $matricula)
                         <tr>
 
                             <td>{{$matricula->ano}}</td>
@@ -91,25 +102,29 @@
                     </tbody>
                 </table>
             </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    @for($i=1;$i<$retorno['pages'];$i++)
+                        <li @if($retorno['currentPage'] == $i) class="active" @endif>
+                            <a href="/?page={{$i}}&status={{\Request::get('status')}}&pagamento={{\Request::get('pagamento')}}">
+                                {{$i}}
+                            </a>
+                        </li>
+                    @endfor
+                </ul>
+            </nav>
         @endif
     </div>
 @endsection
 
 @section('specific-scripts')
-    <script src="/js/jquery.dataTables.min.js"></script>
-    <script src="/js/dataTables.bootstrap.min.js"></script>
     <script>
         $(function () {
-            $('.datatable').DataTable({
-                "language": {
-                    "url": "js/Portuguese-Brasil.json"
-                }
-            });
             $('[data-toggle="tooltip"]').tooltip()
         })
 
-        $('.select-filter').on('change', function() {
-           $('#form-filter').submit();
+        $('.select-filter').on('change', function () {
+            $('#form-filter').submit();
         });
     </script>
 @endsection

@@ -13,6 +13,9 @@ use App\Models\Curso;
 use App\Models\Matricula;
 use App\Models\Pagamento;
 use App\Models\TipoPagamento;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Validation\ValidationException;
 
 class MatriculaService
@@ -59,18 +62,36 @@ class MatriculaService
         return $matricula;
     }
 
-    public function list($filters)
+    /**
+     * @param Request $request
+     * @return LengthAwarePaginator
+     */
+    public function list($request)
     {
-        $result = Matricula::orderByDesc('ano')->get();
+        $data = $request->all();
 
-        $matriculas = [];
-        foreach ($result as $matricula) {
-            if ($this->filter($filters, $matricula)) {
-                $matriculas[] = $matricula;
-            }
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = isset($data['limit']) ? $data['limit'] : 10;
+
+        $total = count($this->execQuery($data));
+
+        $inicio = ($limit * $page) - $limit;
+
+        $arrayResult = $this->execQuery($data, $limit, $inicio);
+
+        $lines = [];
+        foreach ($arrayResult as $linha) {
+            $lines[] = Matricula::find($linha->id);
         }
 
-        return $matriculas;
+        $retorno['pages'] = (int)ceil($total / $limit);
+        $retorno['total'] = $total;
+        $retorno['currentPage'] = $page;
+        $retorno['start'] = $inicio + 1;
+        $retorno['end'] = ($inicio + $limit) <= $total ? $inicio + $limit : $total;
+        $retorno['lines'] = $lines;
+
+        return $retorno;
     }
 
     /**
@@ -135,7 +156,6 @@ class MatriculaService
      */
     private function filter($filters, $matricula)
     {
-
         if (!isset($filters['status'])) {
             $filters['status'] = 'ativos';
         }
@@ -248,5 +268,51 @@ class MatriculaService
         } catch (\Exception $e) {
             throw new \Exception('Ocorreu um erro ao cancelar a matricula');
         }
+    }
+
+    private function execQuery($filters = [], $limit = null, $inicio = null)
+    {
+        $limitString = '';
+        if ($limit !== null && $inicio !== null) {
+            $limitString = " LIMIT {$limit} OFFSET {$inicio}";
+        }
+
+        $where[] = 'true';
+        if (!isset($filters['status'])) {
+            $filters['status'] = 'ativos';
+        }
+
+        if ($filters['status'] == 'ativos') {
+            $where[] = "(SELECT (matriculas.ano || '-01-01')::DATE + interval '1 month' * cursos.duracao) > NOW()";
+        }
+
+        if ($filters['status'] == 'inativos') {
+            $where[] = "(SELECT (matriculas.ano || '-01-01')::DATE + interval '1 month' * cursos.duracao) <= NOW()";
+        }
+
+        if (isset($filters['pagamento']) && $filters['pagamento'] == 'inadimplente') {
+            $where[] = 'pagamento_pendente.id IS NOT NULL';
+        }
+
+        if (isset($filters['pagamento']) && $filters['pagamento'] == 'adimplente') {
+            $where[] = 'pagamento_pendente.id IS NULL';
+        }
+
+        $stringWhere = implode(' AND ', $where);
+
+        $baseQuery = \DB::select(\DB::raw(
+            "SELECT DISTINCT matriculas.*
+                    FROM matriculas
+                    JOIN cursos ON cursos.id = matriculas.curso_id
+                    LEFT JOIN pagamentos AS pagamento_pendente ON pagamento_pendente.matricula_id = matriculas.id
+                                                  AND pagamento_pendente.data_pagamento IS NULL
+                                                  AND (
+                                                      pagamento_pendente.data > NOW()
+                                                      OR
+                                                      pagamento_pendente.tipo_pagamento_id = 1
+                                                  )
+                    WHERE {$stringWhere} {$limitString}"));
+
+        return $baseQuery;
     }
 }
