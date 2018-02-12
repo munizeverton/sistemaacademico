@@ -3,12 +3,69 @@
 
 # Sistema Acadêmico
 
-## Decisões tomadas no desenvolvimento
+O projeto foi construído em Laravel, com banco em PostgreSQL. No front-end eu usei bootstrap e alguns plugins jquery para facilitar a usabilidad, como jQueryDataTables. A maior parte do código foi feito usando TDD e a suíte de testes cobre todas ou quase todas as regras de negócio da aplicação.
 
-#### Uso do Laravel
+ Para Continuous Integration eu usei o TravisCI integrada ao GitHub, que faz o build do projeto a cada push.
 
-Pela velocidade de desenvolvimento que o framework proporciona, além da minha familiaridade com a ferramenta.
+  O deploy foi feito no Heroku. O processo de deploy está automatizado pelo travis, que coloca a aplicação em produção automaticamente a cada build
 
-#### Usar o plugin jquery DataTables para filtros e paginação nas grids
+  Abaixo estão alguns links referente ao projeto:
+  [Quadro do Trello](https://trello.com/b/EXFLN9CW/sistema-acad%C3%AAmico) - Quadro utilizado para organizar as tarefas
+  [Aplicação em produção](https://agile-chamber-30676.herokuapp.com/) - Aplicação em produção, hospedada pelo Heroku
+  [Informações dos builds no TravisCI](https://travis-ci.org/munizeverton/sistemaacademico) - Aplicação em produção, hospedada pelo Heroku
 
-Buscando agilidade, mas os filtros e paginação poderiam ser implementados no back-end facilmente, de acordo com a estrutura já criada. Inclusive já existem testes pra isso
+
+## Instalação e configuração
+
+Faça um clone desse projeto
+
+```sh
+git clone https://github.com/munizeverton/sistemaacademico
+```
+
+Crie um arquivo chamado .env a partir do arquivo .env.example e altere as configurações abaixo,
+referentes ao banco da aplicação
+
+```
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_DATABASE=sistemaacademico
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+
+Entre na pasta do projeto clonado e instale as dependencias com o composer
+
+```sh
+cd sistemaacademico
+composer install
+```
+
+## Rodando a aplicação
+
+Você pode rodar a aplicação usando o servidor embutido do PHP
+com o comando abaixo
+
+```sh
+php -S 127.0.0.1:8080 -t public/
+```
+
+Agora basta acessar a aplicação em http://127.0.0.1:8080
+
+## Rodando os testes
+
+Informar as configurações do banco de testes no arquivo .env.testing. Depois disso você poderá rodar a suite de testes executando o comando abaixo
+
+```sh
+vendo/bin/phpunit
+```
+
+## Importação de dados
+
+A importaçãos dos dados contidos nos CSVs pode ser rodada com os comandos abaixo
+
+```sh
+php artisan import:courses database/csv/courses_file.csv
+php artisan import:students database/csv/students_file.csv
+php artisan import:registrations database/csv/registrations_file.csv
+```
