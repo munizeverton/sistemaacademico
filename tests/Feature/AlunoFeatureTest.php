@@ -104,7 +104,7 @@ class AlunoFeatureTest extends AlunoBaseTest
         $response->assertStatus(200);
     }
 
-    public function testeUpdate()
+    public function testUpdate()
     {
         $data = $this->getFakeAlunoData();
         $aluno = $this->getService()->store($data);
