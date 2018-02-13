@@ -11,13 +11,13 @@ abstract class DatabaseTestCase extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
+        \Artisan::call('migrate:reset');
         \Artisan::call('migrate');
         \Artisan::call('db:seed');
     }
 
     public function tearDown()
     {
-        \Artisan::call('migrate:reset');
         parent::tearDown();
     }
 }
