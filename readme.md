@@ -10,8 +10,9 @@ O projeto foi construído em Laravel, com banco em PostgreSQL. No front-end eu u
   O deploy foi feito no Heroku. O processo de deploy está automatizado pelo travis, que coloca a aplicação em produção automaticamente a cada build
 
   Abaixo estão alguns links referente ao projeto:
-  [Quadro do Trello](https://trello.com/b/EXFLN9CW/sistema-acad%C3%AAmico) - Quadro utilizado para organizar as tarefas
-  [Aplicação em produção](https://agile-chamber-30676.herokuapp.com/) - Aplicação em produção, hospedada pelo Heroku
+
+  [Quadro do Trello](https://trello.com/b/EXFLN9CW/sistema-acad%C3%AAmico) - Quadro utilizado para organizar as tarefas  
+  [Aplicação em produção](https://agile-chamber-30676.herokuapp.com/) - Aplicação em produção, hospedada pelo Heroku  
   [Informações dos builds no TravisCI](https://travis-ci.org/munizeverton/sistemaacademico) - Aplicação em produção, hospedada pelo Heroku
 
 
