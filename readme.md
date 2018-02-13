@@ -13,7 +13,7 @@ O projeto foi construído em Laravel, com banco em PostgreSQL. No front-end eu u
 
   [Quadro do Trello](https://trello.com/b/EXFLN9CW/sistema-acad%C3%AAmico) - Quadro utilizado para organizar as tarefas  
   [Aplicação em produção](https://agile-chamber-30676.herokuapp.com/) - Aplicação em produção, hospedada pelo Heroku  
-  [Informações dos builds no TravisCI](https://travis-ci.org/munizeverton/sistemaacademico) - Aplicação em produção, hospedada pelo Heroku
+  [TravisCI](https://travis-ci.org/munizeverton/sistemaacademico) - Informações dos builds
 
 
 ## Instalação e configuração
