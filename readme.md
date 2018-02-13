@@ -34,11 +34,12 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-Entre na pasta do projeto clonado e instale as dependencias com o composer
+Entre na pasta do projeto clonado e instale as dependencias com o composer e gere a chave da aplicação
 
 ```sh
 cd sistemaacademico
 composer install
+php artisan key:generate
 ```
 
 ## Rodando a aplicação
