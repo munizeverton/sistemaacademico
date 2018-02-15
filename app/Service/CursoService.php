@@ -25,7 +25,10 @@ class CursoService
         $curso = new Curso();
 
         try {
-            $curso->id = isset($data['id']) ? $data['id'] : 0;
+            if (isset($data['id'])) {
+                $curso->id = $data['id'];
+            }
+
             $curso->nome = $data['nome'];
             $curso->valor_matricula = $data['valor_matricula'];
             $curso->valor_mensalidade = $data['valor_mensalidade'];

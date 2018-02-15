@@ -25,7 +25,10 @@ class AlunoService
         $aluno = new Aluno();
 
         try {
-            $aluno->id = isset($data['id']) ? $data['id'] : 0;
+            if (isset($data['id'])) {
+                $aluno->id;
+            }
+
             $aluno->cpf = $data['cpf'];
             $aluno->nome = $data['nome'];
             $aluno->rg = $data['rg'];
