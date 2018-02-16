@@ -46,7 +46,7 @@ class ImportRegistrations extends ImportCsvCommand
      */
     public function handle()
     {
-        \DB::beginTransaction();
+        //\DB::beginTransaction();
 
         $fileName = $this->argument('file');
         $this->readFile($fileName);
@@ -60,7 +60,7 @@ class ImportRegistrations extends ImportCsvCommand
 
         $bar->finish();
 
-        \DB::commit();
+        //\DB::commit();
     }
 
     private function importMatriculaByCsvLine($line)
