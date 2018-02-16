@@ -105,11 +105,32 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     @for($i=1;$i<$retorno['pages'];$i++)
-                        <li @if($retorno['currentPage'] == $i) class="active" @endif>
-                            <a href="/?page={{$i}}&status={{\Request::get('status')}}&pagamento={{\Request::get('pagamento')}}">
-                                {{$i}}
-                            </a>
-                        </li>
+                        @if($i == 1)
+                            <li @if($retorno['currentPage'] == $i) class="active" @endif>
+                                <a href="/?page={{$i}}&status={{\Request::get('status')}}&pagamento={{\Request::get('pagamento')}}">
+                                    {{$i}}
+                                </a>
+                            </li>
+                        @elseif($i == $retorno['currentPage'])
+                            <li @if($retorno['currentPage'] == $i) class="active" @endif>
+                                <a href="/?page={{$i}}&status={{\Request::get('status')}}&pagamento={{\Request::get('pagamento')}}">
+                                    {{$i}}
+                                </a>
+                            </li>
+                        @elseif($i <= $retorno['currentPage'] + 2 && $i >= $retorno['currentPage'] - 2)
+                            <li @if($retorno['currentPage'] == $i) class="active" @endif>
+                                <a href="/?page={{$i}}&status={{\Request::get('status')}}&pagamento={{\Request::get('pagamento')}}">
+                                    {{$i}}
+                                </a>
+                            </li>
+                        @elseif($i == $retorno['pages'] - 1)
+                            <li @if($retorno['currentPage'] == $i) class="active" @endif>
+                                <a href="/?page={{$i}}&status={{\Request::get('status')}}&pagamento={{\Request::get('pagamento')}}">
+                                    {{$i}}
+                                </a>
+                            </li>
+                        @endif
+
                     @endfor
                 </ul>
             </nav>
