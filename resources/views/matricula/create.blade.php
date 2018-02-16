@@ -1,7 +1,7 @@
 @extends('template.default')
 
 @section('specific-styles')
-    <link href="/js/chosen_v1.0.0/chosen.css" rel="stylesheet">
+    <link href="/css/chosen.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -44,7 +44,7 @@
 @endsection
 
 @section('specific-scripts')
-    <script src="/js/chosen_v1.0.0/chosen.jquery.min.js"></script>
+    <script src="/js/chosen.jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
