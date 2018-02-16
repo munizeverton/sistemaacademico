@@ -109,4 +109,19 @@ class AlunoController extends Controller
 
         return redirect(route('alunos.index'))->with('flash-message', 'Aluno excluído com sucesso');
     }
+
+    public function find(Request $request)
+    {
+        $alunos = Aluno::where('nome', 'ILIKE', '%' . $request->get('term') . '%')->get();
+        $arrayAlunos = [];
+        foreach($alunos as $aluno) {
+            $arrayAlunos[] = [
+                'id' => $aluno->id,
+                'text' => $aluno->nome,
+            ];
+        }
+        return [
+            'results' => $arrayAlunos
+        ];
+    }
 }

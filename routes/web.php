@@ -23,3 +23,5 @@ Route::post('/matriculas/calculo-troco', 'MatriculaController@calculoTroco')->na
 
 Route::resource('alunos', 'AlunoController');
 Route::resource('cursos', 'CursoController');
+
+Route::get('alunos/find/autocomplete', 'AlunoController@find');

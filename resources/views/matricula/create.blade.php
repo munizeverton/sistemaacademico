@@ -1,7 +1,7 @@
 @extends('template.default')
 
 @section('specific-styles')
-    <link href="/css/chosen.min.css" rel="stylesheet">
+    <link href="/js/chosen_v1.0.0/chosen.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -19,14 +19,11 @@
         @endif
         @php
             $arrayAlunos[''] = 'Selecione o aluno';
-            foreach (\App\Models\Aluno::orderBy('nome')->get() as $aluno) {
-                $arrayAlunos[$aluno->id] = $aluno->nome;
-            }
         @endphp
 
         @component('form.form_group',['field' => 'aluno_id'])
             {{ \Form::label('aluno_id', 'Aluno *',['class' => 'control-label']) }}
-            {{Form::select('aluno_id', $arrayAlunos, null, ['class' => 'form-control choosen'])}}
+            {{Form::select('aluno_id', $arrayAlunos, null, ['class' => 'form-control choosen-ajax'])}}
         @endcomponent
 
         @php
@@ -47,10 +44,20 @@
 @endsection
 
 @section('specific-scripts')
-    <script src="/js/chosen.jquery.min.js"></script>
+    <script src="/js/chosen_v1.0.0/chosen.jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
         $(function () {
             $('.choosen').chosen();
+
+            $('.choosen-ajax').select2({
+                ajax: {
+                    url: '/alunos/find/autocomplete',
+                    dataType: 'json'
+                },
+                minimumInputLength: 2
+            });
         })
     </script>
 @endsection
