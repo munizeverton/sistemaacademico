@@ -5,7 +5,7 @@ $username = '';
 $password = '';
 $database = '';
 
-if (!empty(getenv("DATABASE_URL"))) {
+if (!empty(getenv("EC2_DATABASE_URL"))) {
     $url = parse_url(getenv("DATABASE_URL"));
 
     $host = $url["host"];
