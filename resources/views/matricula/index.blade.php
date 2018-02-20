@@ -69,10 +69,10 @@
                         <tr>
 
                             <td>{{$matricula->ano}}</td>
-                            <td>{{$matricula->curso->nome}}</td>
-                            <td>{{$matricula->aluno->nome}}</td>
+                            <td>{{$matricula->curso_nome}}</td>
+                            <td>{{$matricula->aluno_nome}}</td>
                             <td>
-                                @if($matricula->isPagamentoPendente())
+                                @if(!$matricula->adimplente)
                                     <img src="/icons/icon-pending.png" title="Pagamento pendente" data-toggle="tooltip"
                                          class="table-icon">
                                 @else
@@ -83,7 +83,7 @@
                                 @endif
                             </td>
                             <td>
-                                @if($matricula->isAtiva())
+                                @if($matricula->ativa)
                                     <img src="/icons/icon-active.png" title="Ativa" data-toggle="tooltip"
                                          class="table-icon">
                                 @else

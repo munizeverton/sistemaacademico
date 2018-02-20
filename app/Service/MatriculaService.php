@@ -79,17 +79,12 @@ class MatriculaService
 
         $arrayResult = $this->execQuery($data, $limit, $inicio);
 
-        $lines = [];
-        foreach ($arrayResult as $linha) {
-            $lines[] = Matricula::find($linha->id);
-        }
-
         $retorno['pages'] = (int)ceil($total / $limit);
         $retorno['total'] = $total;
         $retorno['currentPage'] = $page;
         $retorno['start'] = $inicio + 1;
         $retorno['end'] = ($inicio + $limit) <= $total ? $inicio + $limit : $total;
-        $retorno['lines'] = $lines;
+        $retorno['lines'] = $arrayResult;
 
         return $retorno;
     }
@@ -301,13 +296,16 @@ class MatriculaService
         $stringWhere = implode(' AND ', $where);
 
         $baseQuery = \DB::select(\DB::raw(
-            "SELECT DISTINCT matriculas.*
-                    FROM matriculas
-                    JOIN cursos ON cursos.id = matriculas.curso_id
+            "SELECT DISTINCT matriculas.*, cursos.nome AS curso_nome, alunos.nome AS aluno_nome,
+    (SELECT (matriculas.ano || '-01-01')::DATE + interval '1 month' * cursos.duracao) > NOW() AS ativa,
+    pagamento_pendente.id IS NULL AS adimplente
+FROM matriculas
+    JOIN cursos ON cursos.id = matriculas.curso_id
+    JOIN alunos ON alunos.id = matriculas.aluno_id
                     LEFT JOIN pagamentos AS pagamento_pendente ON pagamento_pendente.matricula_id = matriculas.id
                                                   AND pagamento_pendente.data_pagamento IS NULL
                                                   AND (
-                                                      pagamento_pendente.data > NOW()
+                                                      pagamento_pendente.data < NOW()
                                                       OR
                                                       pagamento_pendente.tipo_pagamento_id = 1
                                                   )
