@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/munizeverton/sistemaacademico.svg?branch=master)](https://travis-ci.org/munizeverton/sistemaacademico)
 [![Code Climate](https://api.codeclimate.com/v1/badges/fce3d99739d018b37c33/maintainability)](https://codeclimate.com/github/munizeverton/sistemaacademico/maintainability)
+[![StyleCI](https://styleci.io/repos/120686858/shield?branch=master)](https://styleci.io/repos/120686858)
 
 # Sistema Acadêmico
 
