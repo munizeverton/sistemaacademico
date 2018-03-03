@@ -1,0 +1,13 @@
+preset: laravel
+
+finder:
+  exclude:
+    - "tests"
+  name:
+    - "*.php"
+  not-name:
+    - "*ide_helper.php"
+    - "ide-helper.php"
+
+disabled:
+    - concat_without_spaces
