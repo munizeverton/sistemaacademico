@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AlunoRequest;
 use App\Models\Aluno;
-use App\Service\AlunoService;
 use Illuminate\Http\Request;
+use App\Service\AlunoService;
+use App\Http\Requests\AlunoRequest;
 
 class AlunoController extends Controller
 {
@@ -24,7 +24,7 @@ class AlunoController extends Controller
     }
 
     /**
-     * Action que monta a lista de alunos
+     * Action que monta a lista de alunos.
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
@@ -39,7 +39,7 @@ class AlunoController extends Controller
     }
 
     /**
-     * Monta o formulário de criação de aluno
+     * Monta o formulário de criação de aluno.
      */
     public function create()
     {
@@ -47,7 +47,7 @@ class AlunoController extends Controller
     }
 
     /**
-     * Recebe o POST do formulário e cria o aluno
+     * Recebe o POST do formulário e cria o aluno.
      * @param AlunoRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
@@ -60,8 +60,8 @@ class AlunoController extends Controller
     }
 
     /**
-     * Monta o formulário de update de aluno
-     * @param integer $alunoId
+     * Monta o formulário de update de aluno.
+     * @param int $alunoId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
@@ -73,7 +73,7 @@ class AlunoController extends Controller
     }
 
     /**
-     * Recebe o PUT e atualiza o aluno
+     * Recebe o PUT e atualiza o aluno.
      * @param AlunoRequest $request
      * @param $alunoId
      * @return \Illuminate\Http\RedirectResponse
@@ -92,6 +92,7 @@ class AlunoController extends Controller
             $aluno = $this->alunoService->show($alunoId);
         } catch (\Exception $e) {
             \Session::flash('alert-type', 'danger');
+
             return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
         }
 
@@ -104,6 +105,7 @@ class AlunoController extends Controller
             $this->alunoService->delete($alunoId);
         } catch (\Exception $e) {
             \Session::flash('alert-type', 'danger');
+
             return redirect(route('alunos.index'))->with('flash-message', $e->getMessage());
         }
 
@@ -114,14 +116,15 @@ class AlunoController extends Controller
     {
         $alunos = Aluno::where('nome', 'ILIKE', '%' . $request->get('term') . '%')->get();
         $arrayAlunos = [];
-        foreach($alunos as $aluno) {
+        foreach ($alunos as $aluno) {
             $arrayAlunos[] = [
                 'id' => $aluno->id,
                 'text' => $aluno->nome,
             ];
         }
+
         return [
-            'results' => $arrayAlunos
+            'results' => $arrayAlunos,
         ];
     }
 }

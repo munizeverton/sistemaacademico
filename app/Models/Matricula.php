@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Matricula
+ * App\Models\Matricula.
  *
  * @property int $id
  * @property int $curso_id
@@ -70,7 +70,7 @@ class Matricula extends Model
             ->where('data_pagamento', null)
             ->first();
 
-        if (!empty($matricula)) {
+        if (! empty($matricula)) {
             return true;
         }
 
@@ -80,7 +80,7 @@ class Matricula extends Model
             ->where('data', '<', (new \DateTime()))
             ->get();
 
-        if (!empty($pagamentosVencidos->all())) {
+        if (! empty($pagamentosVencidos->all())) {
             return true;
         }
 
@@ -89,7 +89,7 @@ class Matricula extends Model
 
     public function isAtiva()
     {
-        if (!empty($this->data_cancelamento)) {
+        if (! empty($this->data_cancelamento)) {
             return false;
         }
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CursoRequest;
 use App\Models\Curso;
 use App\Service\CursoService;
+use App\Http\Requests\CursoRequest;
 
 class CursoController extends Controller
 {
@@ -23,7 +23,7 @@ class CursoController extends Controller
     }
 
     /**
-     * Action que monta a lista de cursos
+     * Action que monta a lista de cursos.
      */
     public function index()
     {
@@ -35,7 +35,7 @@ class CursoController extends Controller
     }
 
     /**
-     * Monta o formulário de criação de curso
+     * Monta o formulário de criação de curso.
      */
     public function create()
     {
@@ -43,7 +43,7 @@ class CursoController extends Controller
     }
 
     /**
-     * Recebe o POST do formulário e cria o curso
+     * Recebe o POST do formulário e cria o curso.
      * @param CursoRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
@@ -56,8 +56,8 @@ class CursoController extends Controller
     }
 
     /**
-     * Monta o formulário de update de curso
-     * @param integer $cursoId
+     * Monta o formulário de update de curso.
+     * @param int $cursoId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
@@ -69,7 +69,7 @@ class CursoController extends Controller
     }
 
     /**
-     * Recebe o PUT e atualiza o curso
+     * Recebe o PUT e atualiza o curso.
      * @param CursoRequest $request
      * @param $cursoId
      * @return \Illuminate\Http\RedirectResponse
@@ -88,6 +88,7 @@ class CursoController extends Controller
             $curso = $this->cursoService->show($cursoId);
         } catch (\Exception $e) {
             \Session::flash('alert-type', 'danger');
+
             return redirect(route('cursos.index'))->with('flash-message', $e->getMessage());
         }
 
@@ -100,6 +101,7 @@ class CursoController extends Controller
             $this->cursoService->delete($cursoId);
         } catch (\Exception $e) {
             \Session::flash('alert-type', 'danger');
+
             return redirect(route('cursos.index'))->with('flash-message', $e->getMessage());
         }
 

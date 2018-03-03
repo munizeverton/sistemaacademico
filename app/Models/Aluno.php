@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Aluno
+ * App\Models\Aluno.
  *
  * @property int $id
  * @property string $cpf
@@ -48,7 +48,7 @@ class Aluno extends Model
     public function getDataNascimentoAttribute($value)
     {
         if (empty($value)) {
-            return null;
+            return;
         }
 
         return (new \DateTime($value))->format('d/m/Y');

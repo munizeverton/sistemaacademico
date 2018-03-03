@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Curso
+ * App\Models\Curso.
  *
  * @property int $id
  * @property string $nome
@@ -60,7 +60,7 @@ class Curso extends Model
     {
         $value = $this->valor_matricula;
         if ($value === null) {
-            return null;
+            return;
         }
 
         return number_format($value, 2, ',', '.');
@@ -70,7 +70,7 @@ class Curso extends Model
     {
         $value = $this->valor_mensalidade;
         if ($value === null) {
-            return null;
+            return;
         }
 
         return number_format($value, 2, ',', '.');

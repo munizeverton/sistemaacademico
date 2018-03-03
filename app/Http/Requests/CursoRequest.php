@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class CursoRequest extends FormRequest
 {
@@ -31,7 +30,7 @@ class CursoRequest extends FormRequest
             'valor_mensalidade' => 'required|min:0',
             'valor_matricula' => 'required|min:0',
             'periodo_id' => 'required',
-            'duracao' => 'required|numeric|min:0'
+            'duracao' => 'required|numeric|min:0',
         ];
 
         return $rules;

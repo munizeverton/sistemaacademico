@@ -19,7 +19,7 @@ class MatriculaTestSeeder extends Seeder
             'cpf' => '44121672836',
             'rg' => '1234234',
             'data_nascimento' => '01/01/1990',
-            'telefone' => '21 2362-2756'
+            'telefone' => '21 2362-2756',
         ]);
 
         Curso::create([
@@ -28,7 +28,7 @@ class MatriculaTestSeeder extends Seeder
             'valor_matricula' => 200,
             'valor_mensalidade' => 195.90,
             'duracao' => 12,
-            'periodo_id' => 1
+            'periodo_id' => 1,
         ]);
     }
 }

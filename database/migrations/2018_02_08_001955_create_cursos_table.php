@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -27,7 +26,7 @@ class CreateCursosTable extends Migration
             $table->timestamps();
         });
 
-        \Schema::table('cursos', function($table){
+        \Schema::table('cursos', function ($table) {
             $table->foreign('periodo_id')->references('id')->on('periodos');
         });
     }

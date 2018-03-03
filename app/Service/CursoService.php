@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: evertonmuniz
  * Date: 07/02/18
- * Time: 22:44
+ * Time: 22:44.
  */
 
 namespace App\Service;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 class CursoService
 {
     /**
-     * Insere um curso no banco
+     * Insere um curso no banco.
      *
      * @param array $data
      * @return Curso
@@ -44,7 +44,7 @@ class CursoService
     }
 
     /**
-     * Recupera um curso no banco
+     * Recupera um curso no banco.
      *
      * @param int $id
      * @return Curso
@@ -66,7 +66,7 @@ class CursoService
     }
 
     /**
-     * Retorna um array de cursos
+     * Retorna um array de cursos.
      *
      * @param bool $paginate
      * @param int $pageSize
@@ -81,6 +81,7 @@ class CursoService
             if ($paginate) {
                 return $curso->paginate($pageSize);
             }
+
             return $curso->get();
         } catch (\Exception $e) {
             throw new \Exception('Ocorreu um erro ao listar os cursos');
@@ -88,7 +89,7 @@ class CursoService
     }
 
     /**
-     * Atualiza um curso no banco
+     * Atualiza um curso no banco.
      *
      * @param int $id
      * @param $data
@@ -119,7 +120,7 @@ class CursoService
     }
 
     /**
-     * Deleta um curso do banco com softdelete
+     * Deleta um curso do banco com softdelete.
      *
      * @param int $id
      * @return bool

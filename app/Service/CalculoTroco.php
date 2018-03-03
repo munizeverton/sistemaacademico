@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: evertonmuniz
  * Date: 11/02/18
- * Time: 18:02
+ * Time: 18:02.
  */
 
 namespace App\Service;
-
 
 class CalculoTroco
 {
@@ -28,20 +27,20 @@ class CalculoTroco
 
         $arrayNotasTroco = [];
         $arrayMoedasTroco = [];
-        $valorInteiro = (int)$totalTroco;
+        $valorInteiro = (int) $totalTroco;
         $totalEmNotas = 0;
 
         foreach ($arrayNotas as $nota) {
             $result = $valorInteiro / $nota;
 
             if ($result >= 1) {
-                $arrayNotasTroco[$nota] = (int)$result;
+                $arrayNotasTroco[$nota] = (int) $result;
                 $valorInteiro = $valorInteiro % $nota;
-                $totalEmNotas += $nota * (int)$result;
+                $totalEmNotas += $nota * (int) $result;
             }
         }
 
-        $valorRestante = (int)round((($totalTroco - $totalEmNotas) * 100));
+        $valorRestante = (int) round((($totalTroco - $totalEmNotas) * 100));
 
         while ($valorRestante > 0) {
             foreach ($arrayMoedas as $moeda) {
@@ -52,7 +51,7 @@ class CalculoTroco
                     } else {
                         $moedaString = $moeda;
                     }
-                    $arrayMoedasTroco[(string) $moedaString] = (int)$result;
+                    $arrayMoedasTroco[(string) $moedaString] = (int) $result;
                     $valorRestante = $valorRestante % $moeda;
                 }
             }
