@@ -26,7 +26,6 @@ class ImportRegistrations extends ImportCsvCommand
 
     private $matriculaService;
 
-
     /**
      * Create a new command instance.
      *
@@ -73,22 +72,25 @@ class ImportRegistrations extends ImportCsvCommand
 
         $alunoId = $this->getColumn(1, $arrayLine);
         $cursoId = $this->getColumn(2, $arrayLine);
-        $ano = (int)$this->getColumn(3, $arrayLine);
+        $ano = (int) $this->getColumn(3, $arrayLine);
 
         if (empty(Aluno::find($alunoId))) {
             $this->warn(' - Ocorreu um erro ao importar a matrícula ' . $this->getColumn(0, $arrayLine) . '. Aluno não encontrado');
+
             return;
         }
 
         if (empty(Curso::find($cursoId))) {
             $this->warn(' - Ocorreu um erro ao importar a matrícula ' . $this->getColumn(0, $arrayLine) . '. Curso não encontrado');
+
             return;
         }
 
         try {
             $this->matriculaService->store($alunoId, $cursoId, $ano);
-        } catch(ValidationException $e) {
+        } catch (ValidationException $e) {
             $this->warn(' - Ocorreu um erro ao importar o matrícula ' . $this->getColumn(0, $arrayLine) . ' - ' . $e->validator->errors()->first());
+
             return;
         }
 

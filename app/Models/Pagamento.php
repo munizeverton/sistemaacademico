@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Pagamento
+ * App\Models\Pagamento.
  *
  * @property int $id
  * @property string $data
@@ -61,7 +60,7 @@ class Pagamento extends Model
     {
         $value = $this->valor;
         if ($value === null) {
-            return null;
+            return;
         }
 
         return number_format($value, 2, ',', '.');
@@ -70,8 +69,8 @@ class Pagamento extends Model
     public function getDataFormattedAttribute()
     {
         $value = $this->data;
-        if (empty($value)){
-            return null;
+        if (empty($value)) {
+            return;
         }
 
         return (new \DateTime($value))->format('d/m/Y');
@@ -80,8 +79,8 @@ class Pagamento extends Model
     public function getDataPagamentoFormattedAttribute()
     {
         $value = $this->data_pagamento;
-        if (empty($value)){
-            return null;
+        if (empty($value)) {
+            return;
         }
 
         return (new \DateTime($value))->format('d/m/Y');

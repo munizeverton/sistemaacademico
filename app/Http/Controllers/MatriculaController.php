@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MatriculaRequest;
 use App\Models\Matricula;
 use App\Models\Pagamento;
+use Illuminate\Http\Request;
 use App\Service\CalculoTroco;
 use App\Service\MatriculaService;
-use Illuminate\Http\Request;
+use App\Http\Requests\MatriculaRequest;
 
 class MatriculaController extends Controller
 {
@@ -26,7 +26,7 @@ class MatriculaController extends Controller
     }
 
     /**
-     * Action que monta a lista de matriculas
+     * Action que monta a lista de matriculas.
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -38,7 +38,7 @@ class MatriculaController extends Controller
     }
 
     /**
-     * Monta o formulário de matrículas
+     * Monta o formulário de matrículas.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
@@ -47,7 +47,7 @@ class MatriculaController extends Controller
     }
 
     /**
-     * Grava a matrícula
+     * Grava a matrícula.
      * @param MatriculaRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
@@ -66,7 +66,7 @@ class MatriculaController extends Controller
     }
 
     /**
-     * Mostra os detalhes da matrícula
+     * Mostra os detalhes da matrícula.
      * @param Matricula $matricula
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -113,7 +113,7 @@ class MatriculaController extends Controller
     }
 
     /**
-     * Cancela uma matrícula
+     * Cancela uma matrícula.
      * @param Matricula $matricula
      * @return \Illuminate\Http\RedirectResponse
      */

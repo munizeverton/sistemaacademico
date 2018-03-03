@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: evertonmuniz
  * Date: 07/02/18
- * Time: 22:44
+ * Time: 22:44.
  */
 
 namespace App\Service;
@@ -12,16 +12,15 @@ use App\Models\Aluno;
 use App\Models\Curso;
 use App\Models\Matricula;
 use App\Models\Pagamento;
-use App\Models\TipoPagamento;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
+use App\Models\TipoPagamento;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class MatriculaService
 {
     /**
-     * Matricula um aluno em um curso
+     * Matricula um aluno em um curso.
      *
      * @param int $idAluno
      * @param int $idCurso
@@ -38,12 +37,12 @@ class MatriculaService
         $matricula = new Matricula();
 
         $aluno = Aluno::find($idAluno);
-        if (!($aluno) instanceof Aluno) {
+        if (! ($aluno) instanceof Aluno) {
             throw new \Exception('Aluno não encontrado');
         }
 
         $curso = Curso::find($idCurso);
-        if (!($curso) instanceof Curso) {
+        if (! ($curso) instanceof Curso) {
             throw new \Exception('Curso não encontrado');
         }
 
@@ -79,7 +78,7 @@ class MatriculaService
 
         $arrayResult = $this->execQuery($data, $limit, $inicio);
 
-        $retorno['pages'] = (int)ceil($total / $limit);
+        $retorno['pages'] = (int) ceil($total / $limit);
         $retorno['total'] = $total;
         $retorno['currentPage'] = $page;
         $retorno['start'] = $inicio + 1;
@@ -90,10 +89,10 @@ class MatriculaService
     }
 
     /**
-     * Valida se o aluno já está matriculado em outro curso no mesmo período
+     * Valida se o aluno já está matriculado em outro curso no mesmo período.
      * @param Aluno $aluno
      * @param Curso $curso
-     * @param integer $ano
+     * @param int $ano
      * @throws ValidationException
      */
     private function validatePeriodoEAno(Aluno $aluno, Curso $curso, $ano)
@@ -107,9 +106,9 @@ class MatriculaService
 
         $result = \DB::select($sql, ['aluno' => $aluno->id, 'ano' => $ano, 'periodo' => $curso->periodo_id]);
 
-        if (!empty($result)) {
+        if (! empty($result)) {
             $error = ValidationException::withMessages([
-                'O aluno já está matriculado em outro curso no mesmo periodo'
+                'O aluno já está matriculado em outro curso no mesmo periodo',
             ]);
 
             throw $error;
@@ -117,7 +116,7 @@ class MatriculaService
     }
 
     /**
-     * Cria os pagamentos da matrícula
+     * Cria os pagamentos da matrícula.
      * @param Matricula $matricula
      */
     private function createPagamentos($matricula)
@@ -144,19 +143,19 @@ class MatriculaService
     }
 
     /**
-     * Aplica o filtro nos dados
+     * Aplica o filtro nos dados.
      * @param array $filters
      * @param Matricula $matricula
      * @return bool
      */
     private function filter($filters, $matricula)
     {
-        if (!isset($filters['status'])) {
+        if (! isset($filters['status'])) {
             $filters['status'] = 'ativos';
         }
 
         if ($filters['status'] == 'ativos') {
-            if (!$matricula->isAtiva()) {
+            if (! $matricula->isAtiva()) {
                 return false;
             }
         }
@@ -168,7 +167,7 @@ class MatriculaService
         }
 
         if (isset($filters['pagamento']) && $filters['pagamento'] == 'inadimplente') {
-            if (!$matricula->isPagamentoPendente()) {
+            if (! $matricula->isPagamentoPendente()) {
                 return false;
             }
         }
@@ -183,7 +182,7 @@ class MatriculaService
     }
 
     /**
-     * Retorna a quantidade de notas e moedas para o troco a partir dos valores informados
+     * Retorna a quantidade de notas e moedas para o troco a partir dos valores informados.
      * @param float $valorCobrado
      * @param float $valorPago
      * @return string
@@ -204,7 +203,7 @@ class MatriculaService
     }
 
     /**
-     * Grava o pagamento de uma mensalidade ou matrícula
+     * Grava o pagamento de uma mensalidade ou matrícula.
      * @param array $data
      * @return Matricula
      * @throws ValidationException
@@ -217,7 +216,7 @@ class MatriculaService
 
         if ($valorCobrado > $valorPago) {
             $error = ValidationException::withMessages([
-                'O valor precisa ser igual ou maior que o valor cobrado'
+                'O valor precisa ser igual ou maior que o valor cobrado',
             ]);
 
             throw $error;
@@ -232,7 +231,7 @@ class MatriculaService
 
     /**
      * Retorna o valor da multa ao cancelar uma matricula
-     * A multa cobrada é de 1% do valor da mensalidade ao mês não cumprido
+     * A multa cobrada é de 1% do valor da mensalidade ao mês não cumprido.
      * @param Matricula $matricula
      * @return float
      */
@@ -246,12 +245,12 @@ class MatriculaService
 
         $mesesRestantes = ((new \DateTime())->diff($fimCurso)->m);
         $multa = round($curso->valor_mensalidade + (($curso->valor_mensalidade / 100) * $mesesRestantes), 2);
+
         return $multa;
     }
 
-
     /**
-     * Cancela uma matrícula
+     * Cancela uma matrícula.
      * @param Matricula $matricula
      * @throws \Exception
      */
@@ -273,7 +272,7 @@ class MatriculaService
         }
 
         $where[] = 'true';
-        if (!isset($filters['status'])) {
+        if (! isset($filters['status'])) {
             $filters['status'] = 'ativos';
         }
 

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -28,7 +27,7 @@ class CreatePagamentosTable extends Migration
             $table->timestamps();
         });
 
-        \Schema::table('pagamentos', function($table){
+        \Schema::table('pagamentos', function ($table) {
             $table->foreign('matricula_id')->references('id')->on('matriculas');
             $table->foreign('tipo_pagamento_id')->references('id')->on('tipos_pagamento');
         });

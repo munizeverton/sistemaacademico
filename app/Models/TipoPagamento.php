@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\TipoPagamento
+ * App\Models\TipoPagamento.
  *
  * @property int $id
  * @property string $nome

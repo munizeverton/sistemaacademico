@@ -68,8 +68,9 @@ class ImportStudents extends ImportCsvCommand
 
         try {
             $cpf = $this->validaCpf($this->getColumn(2, $arrayLine));
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->warn(' - Ocorreu um erro ao importar o aluno ' . $data['nome'] . ' - ' . $e->getMessage());
+
             return;
         }
 
@@ -88,7 +89,7 @@ class ImportStudents extends ImportCsvCommand
     private function validaCpf($cpf)
     {
         $validator = \Validator::make(['cpf' => $cpf], [
-            'cpf' => 'cpf'
+            'cpf' => 'cpf',
         ]);
 
         if ($validator->fails()) {
@@ -99,7 +100,7 @@ class ImportStudents extends ImportCsvCommand
             $cpf = self::mask('###.###.###-##', $cpf);
         }
 
-        if (!empty(Aluno::whereCpf($cpf)->first())){
+        if (! empty(Aluno::whereCpf($cpf)->first())) {
             throw new \Exception('Aluno já cadastrado');
         }
 
@@ -108,10 +109,10 @@ class ImportStudents extends ImportCsvCommand
 
     public static function mask($mask, $str)
     {
-        $str = str_replace(" ", "", $str);
+        $str = str_replace(' ', '', $str);
 
         for ($i = 0; $i < strlen($str); $i++) {
-            $mask[strpos($mask, "#")] = $str[$i];
+            $mask[strpos($mask, '#')] = $str[$i];
         }
 
         return $mask;

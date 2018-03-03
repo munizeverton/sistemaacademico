@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: evertonmuniz
  * Date: 07/02/18
- * Time: 22:44
+ * Time: 22:44.
  */
 
 namespace App\Service;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 class AlunoService
 {
     /**
-     * Insere um aluno no banco
+     * Insere um aluno no banco.
      *
      * @param array $data
      * @return Aluno
@@ -44,7 +44,7 @@ class AlunoService
     }
 
     /**
-     * Recupera um aluno no banco
+     * Recupera um aluno no banco.
      *
      * @param int $id
      * @return Aluno
@@ -66,7 +66,7 @@ class AlunoService
     }
 
     /**
-     * Retorna um array de alunos
+     * Retorna um array de alunos.
      *
      * @param bool $paginate
      * @param int $pageSize
@@ -79,13 +79,14 @@ class AlunoService
         try {
             $aluno = Aluno::query()->orderBy('nome');
 
-            if (isset($filter['nome']) && !empty($filter['nome'])) {
+            if (isset($filter['nome']) && ! empty($filter['nome'])) {
                 $aluno->where('nome', 'ILIKE', '%' . $filter['nome'] . '%');
             }
 
             if ($paginate) {
                 return $aluno->paginate($pageSize);
             }
+
             return $aluno->get();
         } catch (\Exception $e) {
             throw new \Exception('Ocorreu um erro ao listar os alunos');
@@ -93,7 +94,7 @@ class AlunoService
     }
 
     /**
-     * Atualiza um aluno no banco
+     * Atualiza um aluno no banco.
      *
      * @param int $id
      * @param $data
@@ -124,7 +125,7 @@ class AlunoService
     }
 
     /**
-     * Deleta um aluno do banco com softdelete
+     * Deleta um aluno do banco com softdelete.
      *
      * @param int $id
      * @return bool

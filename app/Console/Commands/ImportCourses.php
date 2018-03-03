@@ -24,7 +24,6 @@ class ImportCourses extends ImportCsvCommand
 
     private $cursoService;
 
-
     /**
      * Create a new command instance.
      *
@@ -77,6 +76,7 @@ class ImportCourses extends ImportCsvCommand
 
         if (empty($periodo)) {
             $this->warn(' - Ocorreu um erro ao importar o curso ' . $data['nome'] . '. Período ' . $periodoNome . ' não encontrado');
+
             return;
         }
 
